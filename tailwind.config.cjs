@@ -26,9 +26,8 @@ module.exports = {
         DEFAULT: '250ms'
       },
       borderRadius: EXTENDED_BORDER_RADIUS
-    },
+    }
   },
   darkMode: 'class',
-  plugins: [
-  ]
+  plugins: []
 }
