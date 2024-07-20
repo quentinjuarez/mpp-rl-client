@@ -20,6 +20,8 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isValidEmail: typeof import('../utils/validators')['isValidEmail']
+  const isValidPassword: typeof import('../utils/validators')['isValidPassword']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
@@ -61,6 +63,7 @@ declare global {
   const useScreen: typeof import('../composables/useScreen')['default']
   const useSlots: typeof import('vue')['useSlots']
   const useStore: typeof import('../stores/index')['useStore']
+  const validateEmail: typeof import('../utils/validators')['validateEmail']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -91,6 +94,8 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isValidEmail: UnwrapRef<typeof import('../utils/validators')['isValidEmail']>
+    readonly isValidPassword: UnwrapRef<typeof import('../utils/validators')['isValidPassword']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
@@ -155,6 +160,8 @@ declare module '@vue/runtime-core' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isValidEmail: UnwrapRef<typeof import('../utils/validators')['isValidEmail']>
+    readonly isValidPassword: UnwrapRef<typeof import('../utils/validators')['isValidPassword']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>

@@ -1,14 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import routes from './routes';
-import globalMiddleware from '@/middlewares/global';
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './routes'
+import applyMiddlewares from '@/middlewares'
 
 export default () => {
   const router = createRouter({
     history: createWebHistory(),
-    routes: routes,
-  });
+    routes: routes
+  })
 
-  router.beforeEach(globalMiddleware);
+  router.beforeEach(applyMiddlewares())
 
-  return router;
-};
+  return router
+}

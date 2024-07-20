@@ -13,7 +13,7 @@
             id="firstName"
             v-model="firstName"
             :class="{
-              'focus:!border-red-500': firstNameValidation
+              'focus:!border-red-500': !firstNameValidation
             }"
             placeholder="John"
           />
@@ -27,7 +27,7 @@
             id="lastName"
             v-model="lastName"
             :class="{
-              'focus:!border-red-500': lastNameValidation
+              'focus:!border-red-500': !lastNameValidation
             }"
             placeholder="John"
           />
@@ -44,7 +44,7 @@
           v-model="email"
           type="email"
           :class="{
-            'focus:!border-red-500': emailValidation
+            'focus:!border-red-500': !emailValidation
           }"
           placeholder="john.doe@gmail.com"
         />
@@ -61,7 +61,7 @@
           toggleMask
           :feedback="false"
           :class="{
-            'focus:*:!border-red-500': passwordValidation
+            'focus:*:!border-red-500': !passwordValidation
           }"
         />
       </div>
@@ -77,7 +77,7 @@
       </Button>
 
       <div class="flex flex-col">
-        <Button to="/login" as="router-link" link>Already have an account? Login here</Button>
+        <Button :to="loginUrl" as="router-link" link>Already have an account? Login here</Button>
       </div>
 
       <Divider>OR</Divider>
@@ -88,6 +88,12 @@
 </template>
 
 <script setup lang="ts">
+import { isValidEmail, isValidPassword } from '@/utils/validators'
+
+const store = useStore()
+const router = useRouter()
+const route = useRoute()
+
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
@@ -95,32 +101,50 @@ const password = ref('')
 
 const textValidation = (text: string) => text.trim().length > 0
 
-const firstNameValidation = computed(() => !textValidation(firstName.value))
-const lastNameValidation = computed(() => !textValidation(lastName.value))
+const firstNameValidation = computed(() => textValidation(firstName.value))
+const lastNameValidation = computed(() => textValidation(lastName.value))
 
 const emailValidation = computed(() => {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
-
-  return !regex.test(email.value)
+  return isValidEmail(email.value)
 })
 
-const passwordValidation = computed(() => password.value.length < 8)
+const passwordValidation = computed(() => {
+  return isValidPassword(password.value)
+})
 
 const loading = ref(false)
 
 const disabled = computed(
   () =>
-    firstNameValidation.value ||
-    lastNameValidation.value ||
-    emailValidation.value ||
-    passwordValidation.value
+    !firstNameValidation.value ||
+    !lastNameValidation.value ||
+    !emailValidation.value ||
+    !passwordValidation.value
 )
 
-const onRegister = () => {
+const onRegister = async () => {
   if (disabled.value) return
 
   loading.value = true
+
+  const res = await store.register({
+    firstName: firstName.value,
+    lastName: lastName.value,
+    email: email.value,
+    password: password.value
+  })
+
+  loading.value = false
+
+  if (res) {
+    router.push((route.query.redirect as string) || '/')
+  }
 }
+
+const loginUrl = computed(() => {
+  if (!route.query.redirect) return '/login'
+  return `/login?redirect=${route.query.redirect}`
+})
 </script>
 
 <style>

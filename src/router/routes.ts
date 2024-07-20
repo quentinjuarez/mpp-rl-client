@@ -1,27 +1,26 @@
+import isAuth from '@/middlewares/isAuth'
+import getMe from '@/middlewares/getMe'
+
 const routes = [
   {
     path: '',
     name: 'index',
     component: () => import('@/pages/index.vue'),
     meta: {
-      auth: true
+      middlewares: [isAuth, getMe]
     }
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('@/pages/login.vue'),
-    meta: {
-      auth: false
-    }
+    meta: {}
   },
   {
     path: '/register',
     name: 'register',
     component: () => import('@/pages/register.vue'),
-    meta: {
-      auth: false
-    }
+    meta: {}
   },
   // NOT FOUND
   {
