@@ -22,6 +22,12 @@ const routes = [
     component: () => import('@/pages/register.vue'),
     meta: {}
   },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('@/pages/logout.vue'),
+    meta: {}
+  },
   // NOT FOUND
   {
     path: '/:pathMatch(.*)*',

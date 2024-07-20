@@ -4,7 +4,7 @@ const isAuth = (to: any, _from: any, next: any) => {
   if (store.isAuthenticated) {
     next()
   } else {
-    const redirect = to.fullPath
+    const redirect = to.name === 'index' ? undefined : to.fullPath
     next({
       name: 'login',
       query: {

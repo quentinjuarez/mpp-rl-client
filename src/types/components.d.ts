@@ -10,8 +10,11 @@ declare module 'vue' {
     Button: typeof import('primevue/button')['default']
     Divider: typeof import('primevue/divider')['default']
     InputText: typeof import('primevue/inputtext')['default']
+    NavBar: typeof import('./../components/Layout/NavBar.vue')['default']
     Password: typeof import('primevue/password')['default']
+    Popover: typeof import('primevue/popover')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserMenu: typeof import('./../components/Layout/UserMenu.vue')['default']
   }
 }
