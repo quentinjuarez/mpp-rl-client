@@ -27,7 +27,7 @@ const router = useRouter()
 const onSelect = (event: any) => {
   router.push({
     name: 'user',
-    params: { username: event.data.username }
+    params: { username: encodeURIComponent(event.data.username) }
   })
 }
 </script>
