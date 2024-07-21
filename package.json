@@ -1,8 +1,8 @@
 {
   "name": "mpp-rl-client",
-  "private": true,
   "packageManager": "yarn@3.2.3",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "mpp-rl-client",
   "type": "module",
   "scripts": {
     "dev": "vite",
