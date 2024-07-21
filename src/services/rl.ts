@@ -11,8 +11,8 @@ class RLService {
     const res = await this.client.get<PaginatedResponse<{ events: RLEvent[] }>>('/events', {
       params: {
         name: 'RLCS',
-        after: new Date('2024-05-01').toISOString(),
-        order: 'asc',
+        after: new Date().toISOString(),
+        sort: 'date:asc',
         mode: 3
       }
     })
@@ -43,8 +43,8 @@ class RLService {
   async matches() {
     const res = await this.client.get<PaginatedResponse<{ matches: RLMatch[] }>>('/matches', {
       params: {
-        after: new Date('2024-05-01').toISOString(),
-        order: 'asc'
+        after: new Date().toISOString(),
+        sort: 'date:asc'
       }
     })
 
@@ -59,6 +59,17 @@ class RLService {
 
   async matchGames(id: string) {
     const res = await this.client.get<{ games: RLGame[] }>(`/matches/${id}/games`)
+
+    return res.data
+  }
+
+  async search(query: string) {
+    const res = await this.client.get<PaginatedResponse<{ events: RLEvent[] }>>('/search', {
+      params: {
+        relavant: true,
+        type: 'event'
+      }
+    })
 
     return res.data
   }

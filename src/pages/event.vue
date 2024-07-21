@@ -86,7 +86,7 @@ const RLStore = useRLStore()
 
 const { event } = storeToRefs(RLStore)
 
-function formatDate(date: Date): string {
+function formatDate(date: string): string {
   const browserLocale = navigator.language
 
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }

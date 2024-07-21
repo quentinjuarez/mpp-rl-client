@@ -82,6 +82,19 @@ export const useRLStore = defineStore('mpp-rl-data', {
       } finally {
         this.loading = false
       }
+    },
+    async search(query: string) {
+      try {
+        this.loading = true
+        await this.$services.rl.search(query)
+
+        return true
+      } catch (error) {
+        this.events = []
+        return false
+      } finally {
+        this.loading = false
+      }
     }
   },
   persist: {

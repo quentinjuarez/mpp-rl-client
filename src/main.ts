@@ -48,7 +48,10 @@ app.use(PrimeVue, {
     options: {
       prefix: 'mpp-rl'
     }
-  }
+  },
+  ripple: false
 })
+
+app.directive('ripple', {})
 
 app.mount('#app')

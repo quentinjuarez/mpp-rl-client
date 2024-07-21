@@ -1,6 +1,5 @@
 <template>
   <div
-    :key="props.team._id"
     class="flex items-center gap-2"
     :class="{
       'flex-row-reverse': props.reverse
@@ -14,10 +13,16 @@
 <script setup lang="ts">
 import getRegion from '@/utils/region'
 
-const props = defineProps<{
-  team: RLTeam
-  reverse?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    team?: RLTeam
+    reverse?: boolean
+  }>(),
+  {
+    reverse: false,
+    team: () => ({ name: 'TBD', image: undefined, region: undefined }) as RLTeam
+  }
+)
 
 const image = computed(() => props.team.image || getRegion(props.team.region).flag)
 </script>

@@ -5,9 +5,9 @@
     </div>
     <div v-else class="space-y-4">
       <h1 class="flex justify-between text-4xl font-bold">
-        <TeamLabel :team="match.blue.team.team" class="w-[calc(50%-8px)]" />
+        <TeamLabel :team="match.blue?.team.team" class="w-[calc(50%-8px)]" />
         <span class="w-4 text-center">-</span>
-        <TeamLabel :team="match.orange.team.team" class="w-[calc(50%-8px)]" reverse />
+        <TeamLabel :team="match.orange?.team.team" class="w-[calc(50%-8px)]" reverse />
       </h1>
 
       <h2 class="text-2xl font-bold">{{ match.event.name }}</h2>
@@ -24,18 +24,18 @@
             <template #title>
               <div class="flex w-18 flex-none justify-center gap-2">
                 <Tag
-                  :value="String(game.blue.team.stats.core.goals || 0)"
+                  :value="String(game.blue?.team.stats.core.goals || 0)"
                   severity="info"
                   :class="{
-                    border: game.blue.winner
+                    border: game.blue?.winner
                   }"
                 />
                 <span>-</span>
                 <Tag
-                  :value="String(game.orange.team.stats.core.goals || 0)"
+                  :value="String(game.orange?.team.stats.core.goals || 0)"
                   severity="warn"
                   :class="{
-                    border: !game.blue.winner
+                    border: game.blue?.winner === false
                   }"
                 />
               </div>
@@ -53,7 +53,7 @@ const RLStore = useRLStore()
 
 const { match } = storeToRefs(RLStore)
 
-function formatDate(date: Date): string {
+function formatDate(date: string): string {
   const browserLocale = navigator.language
 
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }

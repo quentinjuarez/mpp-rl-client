@@ -4,4 +4,10 @@
 
 <script setup lang="ts">
 const store = useStore()
+
+const RLStore = useRLStore()
+
+onMounted(() => {
+  RLStore.search('')
+})
 </script>

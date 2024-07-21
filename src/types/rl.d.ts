@@ -11,8 +11,8 @@ declare global {
     _id: string
     slug: string
     name: string
-    startDate: Date
-    endDate: Date
+    startDate: string
+    endDate: string
     region: string
     mode: number
     prize: Prize
@@ -32,8 +32,8 @@ declare global {
     name: string
     format: string
     region: string
-    startDate: Date
-    endDate: Date
+    startDate: string
+    endDate: string
     liquipedia: string
     qualifier?: boolean
     prize?: Prize
@@ -52,7 +52,7 @@ declare global {
       _id: number
       name: string
     }
-    date: Date
+    date: string
     format: {
       type: string
       length: number
@@ -82,8 +82,8 @@ declare global {
       name: string
     }
     duration: number
-    date: Date
-    blue: {
+    date: string
+    blue?: {
       winner: boolean
       matchWinner: boolean
       team: {
@@ -92,7 +92,7 @@ declare global {
       }
       players: RLGamePlayer[]
     }
-    orange: {
+    orange?: {
       team: {
         team: RLTeam
         stats: RLTeamStats
