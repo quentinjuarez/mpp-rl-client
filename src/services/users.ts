@@ -42,6 +42,31 @@ class UsersService {
 
     return res.data
   }
+
+  async checkUsername(username: string) {
+    const res = await this.client.post<boolean>(`/users/username/check`, {
+      username
+    })
+
+    return res.data
+  }
+
+  async updateMe({ username }: { username: string }) {
+    const res = await this.client.post<User>('/users/me', {
+      username
+    })
+
+    return res.data
+  }
+
+  async updatePassword({ oldPassword, newPassword }: { oldPassword: string; newPassword: string }) {
+    const res = await this.client.post<User>('/users/me/password', {
+      oldPassword,
+      newPassword
+    })
+
+    return res.data
+  }
 }
 
 export default UsersService

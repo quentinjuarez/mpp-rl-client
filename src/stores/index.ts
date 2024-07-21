@@ -72,6 +72,41 @@ export const useStore = defineStore('store', {
       } finally {
         this.loading = false
       }
+    },
+    async checkUsername(username: string) {
+      try {
+        const res = await this.$services.users.checkUsername(username)
+
+        return res
+      } catch (error) {
+        return false
+      }
+    },
+    async updateMe({ username }: { username: string }) {
+      try {
+        const user = await this.$services.users.updateMe({ username })
+
+        this.user = user
+
+        return true
+      } catch (error) {
+        return false
+      }
+    },
+    async updatePassword({
+      oldPassword,
+      newPassword
+    }: {
+      oldPassword: string
+      newPassword: string
+    }) {
+      try {
+        await this.$services.users.updatePassword({ oldPassword, newPassword })
+
+        return true
+      } catch (error) {
+        return false
+      }
     }
   },
   persist: {

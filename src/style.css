@@ -11,6 +11,10 @@ html {
   height: calc(var(--vh, 1vh) * 100);
 }
 
+.p-divider-content {
+  background-color: #121212 !important;
+}
+
 a {
   display: inline-block;
 }

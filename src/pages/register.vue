@@ -146,9 +146,3 @@ const loginUrl = computed(() => {
   return `/login?redirect=${route.query.redirect}`
 })
 </script>
-
-<style>
-.p-divider-content {
-  background-color: #121212 !important;
-}
-</style>

@@ -6,9 +6,25 @@ const routes = [
     path: '',
     name: 'index',
     component: () => import('@/pages/index.vue'),
-    meta: {
-      middlewares: [isAuth, getMe]
-    }
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/pages/home.vue'),
+        meta: {
+          middlewares: [isAuth, getMe]
+        }
+      },
+
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import('@/pages/profile.vue'),
+        meta: {
+          middlewares: [isAuth, getMe]
+        }
+      }
+    ]
   },
   {
     path: '/login',

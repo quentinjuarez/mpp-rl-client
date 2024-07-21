@@ -7,3 +7,7 @@ export const isValidEmail = (text: string) => {
 export const isValidPassword = (text: string) => {
   return !!text.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+-])[A-Za-z\d@$!%*?&+-]{6,}$/)
 }
+
+export const isValidUsername = (text: string) => {
+  return !!text.match(/^[a-zA-Z0-9_]{1,30}$/)
+}

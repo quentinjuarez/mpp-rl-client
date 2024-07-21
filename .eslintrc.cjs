@@ -29,7 +29,7 @@ module.exports = {
     'tailwindcss/no-custom-classname': [
       'error',
       {
-        whitelist: []
+        whitelist: ['pi', 'pi\\-[a-z0-9]+']
       }
     ]
   },

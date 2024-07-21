@@ -2,8 +2,8 @@
   <div class="relative flex">
     <NavBar />
 
-    <div v-if="store.user" class="min-h-screen w-full text-center">
-      <h1>Welcome {{ store.user.username }}</h1>
+    <div v-if="store.user" class="min-h-screen w-full">
+      <RouterView />
     </div>
   </div>
 </template>

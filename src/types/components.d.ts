@@ -9,6 +9,9 @@ declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
     Divider: typeof import('primevue/divider')['default']
+    Icon: typeof import('./../components/Base/Icon.vue')['default']
+    IconField: typeof import('primevue/iconfield')['default']
+    InputIcon: typeof import('primevue/inputicon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     NavBar: typeof import('./../components/Layout/NavBar.vue')['default']
     Password: typeof import('primevue/password')['default']
