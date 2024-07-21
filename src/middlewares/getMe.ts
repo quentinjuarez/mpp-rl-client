@@ -3,7 +3,7 @@ const getMe =
   (_to: any, _from: any, next: any) => {
     const store = useStore()
 
-    if (!store.user || force) {
+    if (!store.me || force) {
       store.getMe()
     }
 
