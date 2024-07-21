@@ -132,10 +132,10 @@ const username = ref(store.me!.username)
 const usernameValidation = computed(() => isValidUsername(username.value))
 
 const disabledUsername = computed(
-  () => !usernameValidation.value || username.value === store.user!.username
+  () => !usernameValidation.value || username.value === store.me!.username
 )
 
-const notChangedUsername = computed(() => username.value === store.user!.username)
+const notChangedUsername = computed(() => username.value === store.me!.username)
 
 const usernameIsAvailable = ref(true)
 const loadingCheckUsername = ref(false)
