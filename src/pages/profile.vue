@@ -125,9 +125,9 @@
 import debounce from 'lodash.debounce'
 const store = useStore()
 
-const { firstName, lastName, email } = store.user!
+const { firstName, lastName, email } = store.me!
 
-const username = ref(store.user!.username)
+const username = ref(store.me!.username)
 
 const usernameValidation = computed(() => isValidUsername(username.value))
 

@@ -1,5 +1,7 @@
 <template>
-  <div
+  <component
+    :is="props.link ? 'RouterLink' : 'div'"
+    :to="{ name: 'team', params: { id: props.team._id } }"
     class="flex items-center gap-2"
     :class="{
       'flex-row-reverse': props.reverse
@@ -7,20 +9,22 @@
   >
     <img :src="image" class="size-8 rounded bg-white/10 object-contain p-1" />
     <span class="truncate">{{ props.team.name }}</span>
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
-import getRegion from '@/utils/region'
+import getRegion from '@/utils/getRegion'
 
 const props = withDefaults(
   defineProps<{
     team?: RLTeam
     reverse?: boolean
+    link?: boolean
   }>(),
   {
+    team: () => ({ name: 'TBD', image: undefined, region: undefined, _id: '-1' }) as RLTeam,
     reverse: false,
-    team: () => ({ name: 'TBD', image: undefined, region: undefined }) as RLTeam
+    link: false
   }
 )
 

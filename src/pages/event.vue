@@ -53,17 +53,12 @@
           <p>No participants yet.</p>
         </div>
         <div v-else class="flex flex-wrap gap-2">
-          <div
+          <TeamLabel
             v-for="participant in event.participants"
             :key="participant.team._id"
-            class="flex items-center gap-2"
-          >
-            <img
-              :src="participant.team.image || getRegion(participant.team.region).flag"
-              class="size-8 rounded bg-white object-contain p-1"
-            />
-            <span>{{ participant.team.name }}</span>
-          </div>
+            :team="participant.team"
+            link
+          />
         </div>
       </div>
       <div v-if="event.matches">
@@ -80,18 +75,9 @@
 </template>
 
 <script setup lang="ts">
-import getRegion from '@/utils/region'
-
 const RLStore = useRLStore()
 
 const { event } = storeToRefs(RLStore)
-
-function formatDate(date: string): string {
-  const browserLocale = navigator.language
-
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-  return new Intl.DateTimeFormat(browserLocale, options).format(new Date(date))
-}
 
 const region = computed(() => {
   return getRegion(event.value?.region)

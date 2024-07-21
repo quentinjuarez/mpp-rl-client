@@ -4,6 +4,7 @@ export const useStore = defineStore('mpp-rl-store', {
   state: () => ({
     screenWidth: document.documentElement.clientWidth,
     screenHeight: document.documentElement.clientHeight,
+    me: null as User | null,
     user: null as User | null,
     token: null as string | null,
     loading: false,
@@ -66,9 +67,9 @@ export const useStore = defineStore('mpp-rl-store', {
         this.loading = true
         const user = await this.$services.users.getMe()
 
-        this.user = user
+        this.me = user
       } catch (error) {
-        this.user = null
+        this.me = null
         this.token = null
       } finally {
         this.loading = false
@@ -87,10 +88,11 @@ export const useStore = defineStore('mpp-rl-store', {
       try {
         const user = await this.$services.users.updateMe({ username })
 
-        this.user = user
+        this.me = user
 
         return true
       } catch (error) {
+        this.me = null
         return false
       }
     },

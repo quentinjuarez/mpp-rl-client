@@ -6,7 +6,8 @@ export const useRLStore = defineStore('mpp-rl-data', {
     events: [] as RLEvent[],
     event: null as RLEnrichedEvent | null,
     matches: [] as RLMatch[],
-    match: null as RLEnrichedMatch | null
+    match: null as RLEnrichedMatch | null,
+    team: null as RLEnrichedTeam | null
   }),
   getters: {},
   actions: {
@@ -83,14 +84,32 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = false
       }
     },
-    async search(query: string) {
+    async getTeam(id: string) {
       try {
         this.loading = true
-        await this.$services.rl.search(query)
+        const res = await this.$services.rl.team(id)
+        const resPlayers = await this.$services.rl.teamPlayers(id)
+
+        this.team = {
+          ...res,
+          players: resPlayers.players
+        }
 
         return true
       } catch (error) {
-        this.events = []
+        this.team = null
+        return false
+      } finally {
+        this.loading = false
+      }
+    },
+    async search() {
+      try {
+        this.loading = true
+        await this.$services.rl.search()
+
+        return true
+      } catch (error) {
         return false
       } finally {
         this.loading = false

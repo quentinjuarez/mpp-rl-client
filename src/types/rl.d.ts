@@ -133,6 +133,8 @@ declare global {
     slug: string
     tag: string
     country: string
+    name: string
+    coach: boolean
   }
 
   interface RLTeam {
@@ -142,5 +144,9 @@ declare global {
     image?: string
     region?: string
     relevant?: boolean
+  }
+
+  interface RLEnrichedTeam extends RLTeam {
+    players: RLPlayer[]
   }
 }

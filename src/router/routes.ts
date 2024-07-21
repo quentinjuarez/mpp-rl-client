@@ -8,6 +8,7 @@ import getLeaderboard from '@/middlewares/getLeaderboard'
 import path from 'path'
 import getForecasts from '@/middlewares/getForecasts'
 import getUser from '@/middlewares/getUser'
+import getTeam from '@/middlewares/getTeam'
 
 const routes = [
   {
@@ -85,6 +86,14 @@ const routes = [
         component: () => import('@/pages/match.vue'),
         meta: {
           middlewares: [isAuth, getMe(false), getMatch]
+        }
+      },
+      {
+        path: 'teams/:id',
+        name: 'team',
+        component: () => import('@/pages/team.vue'),
+        meta: {
+          middlewares: [isAuth, getMe(false), getTeam]
         }
       }
     ]

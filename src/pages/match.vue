@@ -10,7 +10,18 @@
         <TeamLabel :team="match.orange?.team.team" class="w-[calc(50%-8px)]" reverse />
       </h1>
 
-      <h2 class="text-2xl font-bold">{{ match.event.name }}</h2>
+      <h2 class="text-2xl font-bold">
+        <RouterLink
+          :to="{
+            name: 'event',
+            params: {
+              id: match.event._id
+            }
+          }"
+        >
+          {{ match.event.name }}
+        </RouterLink>
+      </h2>
 
       <div class="flex items-center gap-2">
         <p>{{ match.format.type }} of {{ match.format.length }}</p>

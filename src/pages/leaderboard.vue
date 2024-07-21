@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="space-y-4">
+    <h1 class="text-4xl font-bold">Leaderboard</h1>
     <DataTable :value="leaderboard" stripedRows selectionMode="single" @row-select="onSelect">
       <Column
         v-for="col of columns"
@@ -17,7 +18,6 @@ const store = useStore()
 const { leaderboard } = storeToRefs(store)
 
 const columns = [
-  { field: '_id', header: 'ID' },
   { field: 'username', header: 'Username' },
   { field: 'points', header: 'Points' }
 ]
