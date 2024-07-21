@@ -13,8 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import getRegion from '@/utils/getRegion'
-
 const props = withDefaults(
   defineProps<{
     team?: RLTeam

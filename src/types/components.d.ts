@@ -7,12 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
-    Chip: typeof import('primevue/chip')['default']
     Column: typeof import('primevue/column')['default']
-    copy: typeof import('./../components/List/EventItem copy.vue')['default']
     DataTable: typeof import('primevue/datatable')['default']
     DatePicker: typeof import('primevue/datepicker')['default']
     Divider: typeof import('primevue/divider')['default']
@@ -24,10 +21,8 @@ declare module 'vue' {
     InputMask: typeof import('primevue/inputmask')['default']
     InputText: typeof import('primevue/inputtext')['default']
     MatchItem: typeof import('./../components/List/MatchItem.vue')['default']
-    Menubar: typeof import('primevue/menubar')['default']
     NavBar: typeof import('./../components/Layout/NavBar.vue')['default']
     Password: typeof import('primevue/password')['default']
-    Popover: typeof import('primevue/popover')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScoreForecast: typeof import('./../components/Forecast/ScoreForecast.vue')['default']

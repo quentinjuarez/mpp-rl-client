@@ -54,8 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import { isValidEmail, isValidPassword } from '@/utils/validators'
-
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
