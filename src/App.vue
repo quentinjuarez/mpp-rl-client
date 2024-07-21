@@ -1,12 +1,10 @@
 <template>
   <div class="dark min-h-screen font-custom selection:bg-violet-500 selection:text-white">
-    <DesktopLayout />
+    <RouterView />
   </div>
 </template>
 
 <script setup lang="ts">
-import DesktopLayout from '@/layouts/DesktopLayout.vue'
-
 const { handleResize } = useScreen()
 
 onMounted(() => {
