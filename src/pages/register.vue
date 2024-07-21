@@ -82,7 +82,7 @@
 
       <Divider>OR</Divider>
 
-      <Button class="w-full">Google</Button>
+      <Button class="w-full" :href="googleUrl" as="a" link>Google</Button>
     </div>
   </div>
 </template>
@@ -142,5 +142,9 @@ const onRegister = async () => {
 const loginUrl = computed(() => {
   if (!route.query.redirect) return '/login'
   return `/login?redirect=${route.query.redirect}`
+})
+
+const googleUrl = computed(() => {
+  return `${import.meta.env.VUE_APP_API_URL}/api/auth/google`
 })
 </script>

@@ -116,6 +116,13 @@ const routes = [
     component: () => import('@/pages/logout.vue'),
     meta: {}
   },
+
+  {
+    path: '/oauth/google',
+    name: 'oauth-google',
+    component: () => import('@/pages/google.vue'),
+    meta: {}
+  },
   // NOT FOUND
   {
     path: '/:pathMatch(.*)*',

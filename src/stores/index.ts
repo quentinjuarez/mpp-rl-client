@@ -29,6 +29,18 @@ export const useStore = defineStore('mpp-rl-store', {
         return false
       }
     },
+    async loginGoogle({ code }: { code: string }) {
+      try {
+        this.$reset()
+        const token = await this.$services.users.loginGoogle(code)
+        if (!token) return null
+
+        this.token = token
+        return this.getMe()
+      } catch (error) {
+        return false
+      }
+    },
     async register({
       firstName,
       lastName,

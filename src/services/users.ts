@@ -16,6 +16,14 @@ class UsersService {
     return res.data
   }
 
+  async loginGoogle(code: string): Promise<string> {
+    const res = await this.client.get<string>('/auth/google/callback', {
+      params: { code }
+    })
+
+    return res.data
+  }
+
   async register({
     firstName,
     lastName,
