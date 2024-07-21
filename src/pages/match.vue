@@ -46,7 +46,7 @@
                   :value="String(game.orange?.team.stats.core.goals || 0)"
                   severity="warn"
                   :class="{
-                    border: game.blue?.winner === false
+                    border: game.orange?.winner
                   }"
                 />
               </div>

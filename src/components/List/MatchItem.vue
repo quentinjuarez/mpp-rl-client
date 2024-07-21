@@ -21,7 +21,7 @@
           :value="String(props.match.orange?.score || 0)"
           severity="warn"
           :class="{
-            border: props.match.blue?.winner === false
+            border: props.match.orange?.winner
           }"
         />
       </div>

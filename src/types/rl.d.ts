@@ -66,6 +66,7 @@ declare global {
     }
     orange: {
       score: number
+      winner: boolean
       team: {
         team: RLTeam
       }
@@ -93,6 +94,8 @@ declare global {
       players: RLGamePlayer[]
     }
     orange?: {
+      winner: boolean
+      matchWinner: boolean
       team: {
         team: RLTeam
         stats: RLTeamStats
