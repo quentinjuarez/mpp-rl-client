@@ -1,11 +1,13 @@
-const getMe = (_to: any, _from: any, next: any) => {
-  const store = useStore()
+const getMe =
+  (force = true) =>
+  (_to: any, _from: any, next: any) => {
+    const store = useStore()
 
-  if (!store.user) {
-    store.getMe()
+    if (!store.user || force) {
+      store.getMe()
+    }
+
+    next()
   }
-
-  next()
-}
 
 export default getMe

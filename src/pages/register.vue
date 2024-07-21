@@ -29,7 +29,7 @@
             :class="{
               'focus:!border-red-500': !lastNameValidation
             }"
-            placeholder="John"
+            placeholder="Doe"
           />
         </div>
       </div>

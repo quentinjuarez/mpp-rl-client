@@ -1,6 +1,7 @@
 import axios from 'axios'
 import UserService from './users'
 import RLService from './rl'
+import ForecastsService from './forecasts'
 
 const initServices = () => {
   const client = axios.create({
@@ -31,11 +32,12 @@ const initServices = () => {
   )
 
   const rlClient = axios.create({
-    baseURL: 'https://zsr.octane.gg/'
+    baseURL: 'https://zsr.octane.gg'
   })
 
   return {
     users: new UserService(client),
+    forecasts: new ForecastsService(client),
     rl: new RLService(rlClient)
   }
 }

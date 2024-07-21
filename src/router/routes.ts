@@ -4,6 +4,10 @@ import getEvent from '@/middlewares/getEvent'
 import getEvents from '@/middlewares/getEvents'
 import getMatch from '@/middlewares/getMatch'
 import getMatches from '@/middlewares/getMatches'
+import getLeaderboard from '@/middlewares/getLeaderboard'
+import path from 'path'
+import getForecasts from '@/middlewares/getForecasts'
+import getUser from '@/middlewares/getUser'
 
 const routes = [
   {
@@ -16,7 +20,7 @@ const routes = [
         name: 'home',
         component: () => import('@/pages/home.vue'),
         meta: {
-          middlewares: [isAuth, getMe]
+          middlewares: [isAuth, getMe(false)]
         }
       },
       {
@@ -24,7 +28,31 @@ const routes = [
         name: 'profile',
         component: () => import('@/pages/profile.vue'),
         meta: {
-          middlewares: [isAuth, getMe]
+          middlewares: [isAuth, getMe(true)]
+        }
+      },
+      {
+        path: 'leaderboard',
+        name: 'leaderboard',
+        component: () => import('@/pages/leaderboard.vue'),
+        meta: {
+          middlewares: [isAuth, getMe(false), getLeaderboard]
+        }
+      },
+      {
+        path: 'forecasts',
+        name: 'forecasts',
+        component: () => import('@/pages/forecasts.vue'),
+        meta: {
+          middlewares: [isAuth, getMe(false), getForecasts]
+        }
+      },
+      {
+        path: 'users/:username',
+        name: 'user',
+        component: () => import('@/pages/user.vue'),
+        meta: {
+          middlewares: [isAuth, getMe(false), getUser]
         }
       },
       {
@@ -32,7 +60,7 @@ const routes = [
         name: 'events',
         component: () => import('@/pages/events.vue'),
         meta: {
-          middlewares: [isAuth, getMe, getEvents]
+          middlewares: [isAuth, getMe(false), getEvents]
         }
       },
       {
@@ -40,7 +68,7 @@ const routes = [
         name: 'event',
         component: () => import('@/pages/event.vue'),
         meta: {
-          middlewares: [isAuth, getMe, getEvent]
+          middlewares: [isAuth, getMe(false), getEvent]
         }
       },
       {
@@ -48,7 +76,7 @@ const routes = [
         name: 'matches',
         component: () => import('@/pages/matches.vue'),
         meta: {
-          middlewares: [isAuth, getMe, getMatches]
+          middlewares: [isAuth, getMe(false), getMatches]
         }
       },
       {
@@ -56,7 +84,7 @@ const routes = [
         name: 'match',
         component: () => import('@/pages/match.vue'),
         meta: {
-          middlewares: [isAuth, getMe, getMatch]
+          middlewares: [isAuth, getMe(false), getMatch]
         }
       }
     ]

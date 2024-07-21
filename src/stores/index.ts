@@ -6,7 +6,8 @@ export const useStore = defineStore('mpp-rl-store', {
     screenHeight: document.documentElement.clientHeight,
     user: null as User | null,
     token: null as string | null,
-    loading: false
+    loading: false,
+    leaderboard: [] as any[]
   }),
   getters: {
     isAuthenticated: (state) => !!state.token
@@ -106,6 +107,67 @@ export const useStore = defineStore('mpp-rl-store', {
         return true
       } catch (error) {
         return false
+      }
+    },
+    async getForecastPoints() {
+      try {
+        const res = await this.$services.forecasts.points()
+
+        return res.points
+      } catch (error) {
+        return 0
+      }
+    },
+    async getForecasts() {
+      try {
+        const res = await this.$services.forecasts.getAll()
+
+        return res.forecasts
+      } catch (error) {
+        return []
+      }
+    },
+    async createOrUpdateForecast({
+      blue,
+      orange,
+      matchId,
+      eventId
+    }: {
+      blue: number
+      orange: number
+      matchId: string
+      eventId: string
+    }) {
+      try {
+        await this.$services.forecasts.createOrUpdate({ blue, orange, matchId, eventId })
+
+        return true
+      } catch (error) {
+        return false
+      }
+    },
+    async getLeaderboard() {
+      try {
+        const res = await this.$services.users.getLeaderboard()
+
+        this.leaderboard = res.leaderboard
+
+        return true
+      } catch (error) {
+        this.leaderboard = []
+        return false
+      }
+    },
+    async getUser(username: string) {
+      try {
+        this.loading = true
+        const user = await this.$services.users.get(username)
+
+        this.user = user
+      } catch (error) {
+        this.user = null
+      } finally {
+        this.loading = false
       }
     }
   },

@@ -10,4 +10,16 @@ declare global {
     lastName: string
     email: string
   }
+
+  type Forecast = {
+    _id: number
+    blue: number
+    orange: number
+    matchId: string
+    eventId: string
+    userId: number
+    processed: boolean
+    correct: boolean
+    exact: boolean
+  }
 }

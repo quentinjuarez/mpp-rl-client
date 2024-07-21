@@ -67,6 +67,18 @@ class UsersService {
 
     return res.data
   }
+
+  async getLeaderboard() {
+    const res = await this.client.get<{ leaderboard: any[] }>('/users/leaderboard')
+
+    return res.data
+  }
+
+  async get(username: string) {
+    const res = await this.client.get<User>(`/users/${username}`)
+
+    return res.data
+  }
 }
 
 export default UsersService

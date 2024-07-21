@@ -30,7 +30,9 @@
         </Tabs>
       </div>
 
-      <div>
+      <div class="flex items-center gap-4">
+        <Tag icon="pi pi-trophy" severity="success" :value="points"></Tag>
+
         <UserMenu />
       </div>
     </div>
@@ -38,18 +40,22 @@
 </template>
 
 <script setup lang="ts">
+const store = useStore()
 const route = useRoute()
 
 const items = ref([
-  { route: '/pronostics', label: 'Pronostics', icon: 'pi pi-chart-line' },
+  { route: '/forecasts', label: 'Forecasts', icon: 'pi pi-chart-line' },
   { route: '/events', label: 'Events', icon: 'pi pi-calendar' },
   { route: '/matches', label: 'Matchs', icon: 'pi pi-trophy' },
   { route: '/leaderboard', label: 'Leaderboard', icon: 'pi pi-list' }
 ])
 
 const mounted = ref(false)
+const points = ref(0)
 
-onMounted(() => {
+onMounted(async () => {
+  points.value = await store.getForecastPoints()
+
   // fix initial focus route animation
   setTimeout(() => {
     mounted.value = true
