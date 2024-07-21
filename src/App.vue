@@ -1,5 +1,5 @@
 <template>
-  <div class="dark min-h-screen font-custom selection:bg-purple-500 selection:text-white">
+  <div class="dark min-h-screen font-custom selection:bg-violet-500 selection:text-white">
     <DesktopLayout />
   </div>
 </template>

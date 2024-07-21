@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useStore = defineStore('store', {
+export const useStore = defineStore('mpp-rl-store', {
   state: () => ({
     screenWidth: document.documentElement.clientWidth,
     screenHeight: document.documentElement.clientHeight,

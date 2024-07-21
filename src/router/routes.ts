@@ -1,5 +1,6 @@
 import isAuth from '@/middlewares/isAuth'
 import getMe from '@/middlewares/getMe'
+import getEvent from '@/middlewares/getEvent'
 
 const routes = [
   {
@@ -15,13 +16,28 @@ const routes = [
           middlewares: [isAuth, getMe]
         }
       },
-
       {
         path: 'profile',
         name: 'profile',
         component: () => import('@/pages/profile.vue'),
         meta: {
           middlewares: [isAuth, getMe]
+        }
+      },
+      {
+        path: 'events',
+        name: 'events',
+        component: () => import('@/pages/events.vue'),
+        meta: {
+          middlewares: [isAuth, getMe]
+        }
+      },
+      {
+        path: 'events/:id',
+        name: 'event',
+        component: () => import('@/pages/event.vue'),
+        meta: {
+          middlewares: [isAuth, getMe, getEvent]
         }
       }
     ]

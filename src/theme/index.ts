@@ -29,23 +29,43 @@ export const SPACING = {
   13: '52px',
   13.5: '54px',
   14: '56px',
+  14.5: '58px',
+  15: '60px',
+  15.5: '62px',
   16: '64px',
+  16.5: '66px',
+  17: '68px',
+  17.5: '70px',
+  18: '72px',
+  18.5: '74px',
+  19: '76px',
+  19.5: '78px',
   20: '80px',
+  22: '88px',
   24: '96px',
+  26: '104px',
   28: '112px',
+  30: '120px',
   32: '128px',
+  34: '136px',
   36: '144px',
+  38: '152px',
   40: '160px',
+  42: '168px',
   44: '176px',
+  46: '184px',
   48: '192px',
+  50: '200px',
   52: '208px',
+  54: '216px',
   56: '224px',
+  58: '232px',
   60: '240px',
   64: '256px',
   72: '288px',
   80: '320px',
-  96: '384px',
-};
+  96: '384px'
+}
 
 export const EXTENDED_FONT_FAMILIES = {
   custom: [
@@ -53,9 +73,9 @@ export const EXTENDED_FONT_FAMILIES = {
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-    '"Noto Color Emoji"',
-  ],
-};
+    '"Noto Color Emoji"'
+  ]
+}
 
 export const EXTENDED_FONT_SIZES = {
   '3xs': ['8px', { lineHeight: '10px' }],
@@ -70,25 +90,24 @@ export const EXTENDED_FONT_SIZES = {
   '3xl': ['24px', { lineHeight: '29px' }],
   '4xl': ['28px', { lineHeight: '34px' }],
   '5xl': ['32px', { lineHeight: '38px' }],
-  '6xl': ['44px', { lineHeight: '53px' }],
-};
+  '6xl': ['44px', { lineHeight: '53px' }]
+}
 
 export const EXTENDED_TRACKING = {
-  wide: '0.02em',
-};
+  wide: '0.02em'
+}
 
 export const EXTENDED_BOX_SHADOW = {
-  DEFAULT:
-    '1px 1px 4px 0 rgba(112, 144, 176, 0.25), -3px 4px 8px rgba(112, 144, 176, 0.25)',
+  DEFAULT: '1px 1px 4px 0 rgba(112, 144, 176, 0.25), -3px 4px 8px rgba(112, 144, 176, 0.25)',
   xs: '1px 1px 4px 0 rgba(112, 144, 176, 0.15)',
   sm: '1px 1px 4px rgba(112, 144, 176, 0.15), -3px 4px 8px rgba(112, 144, 176, 0.15)',
-  lg: '0px 15px 30px rgba(112, 144, 176, 0.25)',
-};
+  lg: '0px 15px 30px rgba(112, 144, 176, 0.25)'
+}
 
 export const EXTENDED_TRANSITION = {
   height: 'height, max-height, min-height',
-  width: 'width, max-width, min-width',
-};
+  width: 'width, max-width, min-width'
+}
 
 export const EXTENDED_BORDER_RADIUS = {
   xs: '1px',
@@ -97,12 +116,12 @@ export const EXTENDED_BORDER_RADIUS = {
   md: '6px',
   lg: '8px',
   xl: '10px',
-  '2xl': '12px',
-};
+  '2xl': '12px'
+}
 
 export const EXTENDED_COLORS = {
   transparent: 'transparent',
   current: 'currentColor',
   black: '#000000',
-  white: '#ffffff',
-};
+  white: '#ffffff'
+}

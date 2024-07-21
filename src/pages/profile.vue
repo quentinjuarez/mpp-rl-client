@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-8 max-w-screen-sm space-y-4 px-6">
+  <div class="space-y-4">
     <h1 class="text-4xl font-bold">Profile</h1>
 
     <div class="space-y-2">
