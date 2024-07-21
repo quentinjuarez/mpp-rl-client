@@ -82,7 +82,7 @@
 
       <Divider>OR</Divider>
 
-      <Button class="w-full" :href="googleUrl" as="a" link>Google</Button>
+      <Button class="w-full" :href="googleUrl" as="a">Google</Button>
     </div>
   </div>
 </template>
@@ -145,6 +145,6 @@ const loginUrl = computed(() => {
 })
 
 const googleUrl = computed(() => {
-  return `${import.meta.env.VUE_APP_API_URL}/api/auth/google`
+  return `${import.meta.env.VITE_APP_BACK_URL}/api/auth/google`
 })
 </script>
