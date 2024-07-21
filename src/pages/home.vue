@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome {{ store.user?.username }}</h1>
+  <h1 class="text-4xl font-bold">Welcome {{ store.me?.username }}</h1>
 </template>
 
 <script setup lang="ts">
