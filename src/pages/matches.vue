@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-1">
-    <EventItem v-for="event in RLStore.events" :key="event._id" :event="event" />
+    <MatchItem v-for="match in RLStore.matches" :key="match._id" :match="match" />
   </div>
 </template>
 

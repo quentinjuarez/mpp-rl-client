@@ -11,7 +11,7 @@
           </RouterLink>
         </div>
 
-        <Tabs :value="route.fullPath">
+        <Tabs :value="focusRoute">
           <TabList>
             <Tab v-for="tab in items" :key="tab.label" :value="tab.route">
               <router-link v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
@@ -43,9 +43,24 @@ const route = useRoute()
 const items = ref([
   { route: '/pronostics', label: 'Pronostics', icon: 'pi pi-chart-line' },
   { route: '/events', label: 'Events', icon: 'pi pi-calendar' },
-  { route: '/matchs', label: 'Matchs', icon: 'pi pi-trophy' },
+  { route: '/matches', label: 'Matchs', icon: 'pi pi-trophy' },
   { route: '/leaderboard', label: 'Leaderboard', icon: 'pi pi-list' }
 ])
+
+const mounted = ref(false)
+
+onMounted(() => {
+  // fix initial focus route animation
+  setTimeout(() => {
+    mounted.value = true
+  }, 500)
+})
+
+const focusRoute = computed(() => {
+  if (!mounted.value) return ''
+  const path = route.fullPath
+  return items.value.find((item) => path.startsWith(item.route))?.route || ''
+})
 </script>
 
 <style>

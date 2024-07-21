@@ -1,6 +1,9 @@
 import isAuth from '@/middlewares/isAuth'
 import getMe from '@/middlewares/getMe'
 import getEvent from '@/middlewares/getEvent'
+import getEvents from '@/middlewares/getEvents'
+import getMatch from '@/middlewares/getMatch'
+import getMatches from '@/middlewares/getMatches'
 
 const routes = [
   {
@@ -29,7 +32,7 @@ const routes = [
         name: 'events',
         component: () => import('@/pages/events.vue'),
         meta: {
-          middlewares: [isAuth, getMe]
+          middlewares: [isAuth, getMe, getEvents]
         }
       },
       {
@@ -38,6 +41,22 @@ const routes = [
         component: () => import('@/pages/event.vue'),
         meta: {
           middlewares: [isAuth, getMe, getEvent]
+        }
+      },
+      {
+        path: 'matches',
+        name: 'matches',
+        component: () => import('@/pages/matches.vue'),
+        meta: {
+          middlewares: [isAuth, getMe, getMatches]
+        }
+      },
+      {
+        path: 'matches/:id',
+        name: 'match',
+        component: () => import('@/pages/match.vue'),
+        meta: {
+          middlewares: [isAuth, getMe, getMatch]
         }
       }
     ]

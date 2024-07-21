@@ -44,7 +44,84 @@ declare global {
     matches: RLMatch[]
   }
 
-  interface RLMatch {}
+  interface RLMatch {
+    _id: string
+    slug: string
+    event: RLMatchEvent
+    stage: {
+      _id: number
+      name: string
+    }
+    date: Date
+    format: {
+      type: string
+      length: number
+    }
+    blue: {
+      score: number
+      winner: boolean
+      team: {
+        team: RLTeam
+      }
+    }
+    orange: {
+      score: number
+      team: {
+        team: RLTeam
+      }
+    }
+    number: number
+  }
+
+  interface RLGame {
+    _id: string
+    number: number
+    // match: Match
+    map: {
+      id: string
+      name: string
+    }
+    duration: number
+    date: Date
+    blue: {
+      winner: boolean
+      matchWinner: boolean
+      team: {
+        team: RLTeam
+        stats: RLTeamStats
+      }
+      players: RLGamePlayer[]
+    }
+    orange: {
+      team: {
+        team: RLTeam
+        stats: RLTeamStats
+      }
+      players: OrangePlayer[]
+    }
+    ballchasing: string
+    flipBallchasing: boolean
+  }
+
+  interface RLGamePlayer {
+    player: RLPlayer
+    stats: RLStats
+    // advanced: any
+  }
+
+  interface RLEnrichedMatch extends RLMatch {
+    games: RLGame[]
+  }
+
+  interface RLMatchEvent {
+    _id: string
+    slug: string
+    name: string
+    region: string
+    mode: number
+    tier: string
+    image: string
+  }
 
   interface RLParticipant {
     team: RLTeam
@@ -64,5 +141,6 @@ declare global {
     name: string
     image?: string
     region?: string
+    relevant?: boolean
   }
 }
