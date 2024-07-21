@@ -46,7 +46,7 @@ const route = useRoute()
 const items = ref([
   { route: '/forecasts', label: 'Forecasts', icon: 'pi pi-chart-line' },
   { route: '/events', label: 'Events', icon: 'pi pi-calendar' },
-  { route: '/matches', label: 'Matchs', icon: 'pi pi-trophy' },
+  { route: '/results', label: 'Results', icon: 'pi pi-trophy' },
   { route: '/leaderboard', label: 'Leaderboard', icon: 'pi pi-list' }
 ])
 

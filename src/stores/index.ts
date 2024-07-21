@@ -8,7 +8,8 @@ export const useStore = defineStore('mpp-rl-store', {
     user: null as User | null,
     token: null as string | null,
     loading: false,
-    leaderboard: [] as any[]
+    leaderboard: [] as any[],
+    forecasts: [] as Forecast[]
   }),
   getters: {
     isAuthenticated: (state) => !!state.token
@@ -124,28 +125,38 @@ export const useStore = defineStore('mpp-rl-store', {
       try {
         const res = await this.$services.forecasts.getAll()
 
-        return res.forecasts
+        this.forecasts = res.forecasts
+        return true
       } catch (error) {
-        return []
+        this.forecasts = []
+        return false
       }
     },
     async createOrUpdateForecast({
       blue,
       orange,
       matchId,
-      eventId
+      eventId,
+      date
     }: {
       blue: number
       orange: number
       matchId: string
       eventId: string
+      date: string
     }) {
       try {
-        await this.$services.forecasts.createOrUpdate({ blue, orange, matchId, eventId })
+        const res = await this.$services.forecasts.createOrUpdate({
+          blue,
+          orange,
+          matchId,
+          eventId,
+          date
+        })
 
-        return true
+        return res
       } catch (error) {
-        return false
+        return null
       }
     },
     async getLeaderboard() {

@@ -19,18 +19,21 @@ class ForecastsService {
     blue,
     orange,
     matchId,
-    eventId
+    eventId,
+    date
   }: {
     blue: number
     orange: number
     matchId: string
     eventId: string
+    date: string
   }) {
     const res = await this.client.post<Forecast>('/forecasts', {
       blue,
       orange,
       matchId,
-      eventId
+      eventId,
+      date
     })
 
     return res.data

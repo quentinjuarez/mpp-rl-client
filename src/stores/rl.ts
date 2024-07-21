@@ -54,7 +54,28 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = true
         const res = await this.$services.rl.matches()
 
-        this.matches = res.matches
+        const realMatches = res.matches.filter((m) => m.blue)
+
+        this.matches = realMatches
+
+        return true
+      } catch (error) {
+        this.matches = []
+        return false
+      } finally {
+        this.loading = false
+      }
+    },
+    async getResults(day?: string) {
+      try {
+        day = day || new Date().toISOString().split('T')[0]
+
+        this.loading = true
+        const res = await this.$services.rl.results(day)
+
+        const realMatches = res.matches.filter((m) => m.blue)
+
+        this.matches = realMatches
 
         return true
       } catch (error) {

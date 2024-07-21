@@ -1,5 +1,7 @@
 import type { AxiosInstance } from 'axios'
 
+const tempRegions = ['NA', 'EU', 'INT']
+
 class RLService {
   client: AxiosInstance
 
@@ -12,7 +14,8 @@ class RLService {
       params: {
         after: new Date().toISOString(),
         sort: 'startDate:asc',
-        mode: 3
+        mode: 3,
+        region: tempRegions
       }
     })
 
@@ -39,12 +42,38 @@ class RLService {
     return res.data
   }
 
+  async results(day: string) {
+    const after = new Date(day)
+    after.setHours(0, 0, 0, 0)
+
+    const before = new Date(day)
+    before.setHours(23, 59, 59, 999)
+
+    const now = new Date()
+    if (before > now) {
+      before.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds())
+    }
+
+    const res = await this.client.get<PaginatedResponse<{ matches: RLMatch[] }>>('/matches', {
+      params: {
+        after: after.toISOString(),
+        before: before.toISOString(),
+        sort: 'date:asc',
+        mode: 3,
+        region: tempRegions
+      }
+    })
+
+    return res.data
+  }
+
   async matches() {
     const res = await this.client.get<PaginatedResponse<{ matches: RLMatch[] }>>('/matches', {
       params: {
         after: new Date().toISOString(),
         sort: 'date:asc',
-        mode: 3
+        mode: 3,
+        region: tempRegions
       }
     })
 

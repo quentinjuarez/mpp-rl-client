@@ -9,6 +9,7 @@ import path from 'path'
 import getForecasts from '@/middlewares/getForecasts'
 import getUser from '@/middlewares/getUser'
 import getTeam from '@/middlewares/getTeam'
+import getResults from '@/middlewares/getResults'
 
 const routes = [
   {
@@ -45,7 +46,7 @@ const routes = [
         name: 'forecasts',
         component: () => import('@/pages/forecasts.vue'),
         meta: {
-          middlewares: [isAuth, getMe(false), getForecasts]
+          middlewares: [isAuth, getMe(false), getForecasts, getMatches]
         }
       },
       {
@@ -73,11 +74,11 @@ const routes = [
         }
       },
       {
-        path: 'matches',
-        name: 'matches',
-        component: () => import('@/pages/matches.vue'),
+        path: 'results',
+        name: 'results',
+        component: () => import('@/pages/results.vue'),
         meta: {
-          middlewares: [isAuth, getMe(false), getMatches]
+          middlewares: [isAuth, getMe(false), getResults]
         }
       },
       {
