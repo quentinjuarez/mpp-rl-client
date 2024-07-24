@@ -14,7 +14,12 @@
     <div class="space-y-2">
       <div class="space-y-2" v-for="(matches, day) in groupedMatches" :key="day">
         <h2 class="text-xl font-bold">{{ day }}</h2>
-        <MatchItem v-for="match in matches" :key="match._id" :match="match" />
+        <MatchItem
+          v-for="match in matches"
+          :key="match._id"
+          :match="match"
+          :forecast="results[match._id]"
+        />
       </div>
 
       <div v-if="!Object.keys(groupedMatches).length" class="text-center text-neutral-400">
@@ -26,6 +31,9 @@
 
 <script setup lang="ts">
 const RLStore = useRLStore()
+const store = useStore()
+
+const { results } = storeToRefs(store)
 
 function groupMatchesByDay(matches: RLMatch[]) {
   return matches.reduce(
