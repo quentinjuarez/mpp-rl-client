@@ -1,10 +1,8 @@
-const getResults = (to: any, _from: any, next: any) => {
+const getResults = (_to: any, _from: any, next: any) => {
   const RLStore = useRLStore()
   const store = useStore()
 
-  const date = to.query.date as string | undefined
-
-  RLStore.getResults(date)
+  RLStore.getResults()
   store.getForecastResults()
 
   next()

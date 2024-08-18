@@ -7,10 +7,14 @@ class ForecastsService {
     this.client = client
   }
 
-  async getAll() {
+  async getAll(eventSlug?: string) {
     const res = await this.client.get<{
       forecasts: Forecast[]
-    }>('/forecasts')
+    }>('/forecasts', {
+      params: {
+        event: eventSlug
+      }
+    })
 
     return res.data
   }
@@ -18,37 +22,45 @@ class ForecastsService {
   async createOrUpdate({
     blue,
     orange,
-    matchId,
-    eventId,
+    matchSlug,
+    eventSlug,
     date
   }: {
     blue: number
     orange: number
-    matchId: string
-    eventId: string
+    matchSlug: string
+    eventSlug: string
     date: string
   }) {
     const res = await this.client.post<Forecast>('/forecasts', {
       blue,
       orange,
-      matchId,
-      eventId,
+      matchSlug,
+      eventSlug,
       date
     })
 
     return res.data
   }
 
-  async points() {
-    const res = await this.client.get<{ points: number }>('/forecasts/points')
+  async points(eventSlug?: string) {
+    const res = await this.client.get<{ points: number }>('/forecasts/points', {
+      params: {
+        event: eventSlug
+      }
+    })
 
     return res.data
   }
 
-  async getForecastResults() {
+  async getForecastResults(eventSlug?: string) {
     const res = await this.client.get<{
       forecasts: Record<string, Forecast>
-    }>('/forecasts/results')
+    }>('/forecasts/results', {
+      params: {
+        event: eventSlug
+      }
+    })
 
     return res.data
   }

@@ -6,6 +6,10 @@
         <h2 class="text-xl font-bold">{{ day }}</h2>
         <ForecastItem v-for="match in matches" :key="match._id" :match="match" />
       </div>
+
+      <div v-if="!Object.keys(groupedMatches).length" class="text-center text-neutral-400">
+        No results found
+      </div>
     </div>
   </div>
 </template>

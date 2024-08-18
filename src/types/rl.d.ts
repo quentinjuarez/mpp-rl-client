@@ -1,9 +1,10 @@
 export {}
 
 declare global {
-  type PaginatedResponse<T> = T & {
+  type PaginatedResponse<T> = {
+    data: T[]
     page: number
-    pageSize: number
+    totalCount: number
     perPage: number
   }
 
@@ -11,8 +12,8 @@ declare global {
     _id: string
     slug: string
     name: string
-    startDate: string
-    endDate: string
+    start_date: string
+    end_date: string
     region: string
     mode: number
     prize: Prize
@@ -32,8 +33,8 @@ declare global {
     name: string
     format: string
     region: string
-    startDate: string
-    endDate: string
+    start_date: string
+    end_date: string
     liquipedia: string
     qualifier?: boolean
     prize?: Prize

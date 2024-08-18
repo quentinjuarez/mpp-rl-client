@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 export const useRLStore = defineStore('mpp-rl-data', {
   state: () => ({
     loading: false,
+    currentEvent: '8b0a-rlcs-2024-world-championship',
     events: [] as RLEvent[],
     event: null as RLEnrichedEvent | null,
     matches: [] as RLMatch[],
@@ -14,9 +15,9 @@ export const useRLStore = defineStore('mpp-rl-data', {
     async getEvents() {
       try {
         this.loading = true
-        const res = await this.$services.rl.events()
+        const { data } = await this.$services.rl.events()
 
-        this.events = res.events
+        this.events = data
 
         return true
       } catch (error) {
@@ -32,12 +33,13 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = true
         const res = await this.$services.rl.event(id)
         const resMatches = await this.$services.rl.eventMatches(id)
-        const resParticipants = await this.$services.rl.eventParticipants(id)
+        // const resParticipants = await this.$services.rl.eventParticipants(id)
 
         this.event = {
           ...res,
-          participants: resParticipants.participants,
-          matches: resMatches.matches
+          // participants: resParticipants.participants,
+          matches: resMatches.matches,
+          participants: []
         }
 
         return true
@@ -52,11 +54,9 @@ export const useRLStore = defineStore('mpp-rl-data', {
     async getMatches() {
       try {
         this.loading = true
-        const res = await this.$services.rl.matches()
+        const { data } = await this.$services.rl.matches(this.currentEvent)
 
-        const realMatches = res.matches.filter((m) => m.blue)
-
-        this.matches = realMatches
+        this.matches = data
 
         return true
       } catch (error) {
@@ -66,14 +66,12 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = false
       }
     },
-    async getResults(day?: string) {
+    async getResults() {
       try {
-        day = day || new Date().toISOString().split('T')[0]
-
         this.loading = true
-        const res = await this.$services.rl.results(day)
+        const { data } = await this.$services.rl.results(this.currentEvent)
 
-        const realMatches = res.matches.filter((m) => m.blue)
+        const realMatches = data.filter((m) => m.blue)
 
         this.matches = realMatches
 
@@ -90,11 +88,12 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = true
         this.match = null
         const res = await this.$services.rl.match(id)
-        const resGames = await this.$services.rl.matchGames(id)
+        // const resGames = await this.$services.rl.matchGames(id)
 
         this.match = {
           ...res,
-          games: resGames.games
+          // games: resGames.games
+          games: []
         }
 
         return true

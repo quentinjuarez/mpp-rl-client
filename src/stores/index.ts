@@ -125,18 +125,18 @@ export const useStore = defineStore('mpp-rl-store', {
         return false
       }
     },
-    async getForecastPoints() {
+    async getForecastPoints(eventSlug?: string) {
       try {
-        const res = await this.$services.forecasts.points()
+        const res = await this.$services.forecasts.points(eventSlug)
 
         return res.points
       } catch (error) {
         return 0
       }
     },
-    async getForecasts() {
+    async getForecasts(eventSlug?: string) {
       try {
-        const res = await this.$services.forecasts.getAll()
+        const res = await this.$services.forecasts.getAll(eventSlug)
 
         this.forecasts = res.forecasts
         return true
@@ -148,22 +148,22 @@ export const useStore = defineStore('mpp-rl-store', {
     async createOrUpdateForecast({
       blue,
       orange,
-      matchId,
-      eventId,
+      matchSlug,
+      eventSlug,
       date
     }: {
       blue: number
       orange: number
-      matchId: string
-      eventId: string
+      matchSlug: string
+      eventSlug: string
       date: string
     }) {
       try {
         const res = await this.$services.forecasts.createOrUpdate({
           blue,
           orange,
-          matchId,
-          eventId,
+          matchSlug,
+          eventSlug,
           date
         })
 
@@ -172,9 +172,9 @@ export const useStore = defineStore('mpp-rl-store', {
         return null
       }
     },
-    async getLeaderboard() {
+    async getLeaderboard(eventSlug?: string) {
       try {
-        const res = await this.$services.users.getLeaderboard()
+        const res = await this.$services.users.getLeaderboard(eventSlug)
 
         this.leaderboard = res.leaderboard
 

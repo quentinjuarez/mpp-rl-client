@@ -4,8 +4,4 @@
 
 <script setup lang="ts">
 const store = useStore()
-
-onMounted(() => {
-  store.getLeaderboard()
-})
 </script>

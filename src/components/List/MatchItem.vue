@@ -2,7 +2,7 @@
   <RouterLink
     :to="{
       name: 'match',
-      params: { id: props.match._id }
+      params: { slug: props.match.slug }
     }"
     class="flex w-full items-center justify-between gap-8 p-2 transition-all hover:bg-white/10"
   >

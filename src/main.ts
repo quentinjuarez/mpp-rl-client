@@ -9,11 +9,13 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import { definePreset } from '@primevue/themes'
 import 'primeicons/primeicons.css'
+import Vue3RouterMiddlewares from 'vue3-router-middlewares'
 
 const app = createApp(App)
 
 const router = initRouter()
 app.use(router)
+app.use(Vue3RouterMiddlewares, { router })
 
 const pinia = initPinia(router)
 
@@ -23,6 +25,7 @@ const i18n = initI18n()
 app.use(i18n)
 
 app.directive('click-outside', vClickOutside)
+
 
 const MyPreset = definePreset(Aura, {
   semantic: {

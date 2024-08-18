@@ -55,7 +55,7 @@ const blue = ref()
 const orange = ref()
 
 onMounted(() => {
-  forecast.value = forecasts.value.find((f) => f.matchId === props.match._id)
+  forecast.value = forecasts.value.find((f) => f.matchSlug === props.match._id)
 
   blue.value = forecast.value?.blue
   orange.value = forecast.value?.orange
@@ -106,8 +106,8 @@ const updateForecast = async (e: any) => {
   if (error.value) return
 
   const res = await store.createOrUpdateForecast({
-    matchId: props.match._id,
-    eventId: props.match.event._id,
+    matchSlug: props.match._id,
+    eventSlug: props.match.event._id,
     date: props.match.date,
     blue: Number(blue.value || 0),
     orange: Number(orange.value || 0)

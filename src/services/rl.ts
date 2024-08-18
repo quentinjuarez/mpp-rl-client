@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios'
 
-const tempRegions = ['NA', 'EU', 'INT']
+// const tempRegions = ['NA', 'EU', 'INT']
 
 class RLService {
   client: AxiosInstance
@@ -10,26 +10,32 @@ class RLService {
   }
 
   async events() {
-    const res = await this.client.get<PaginatedResponse<{ events: RLEvent[] }>>('/events', {
+    const res = await this.client.get<PaginatedResponse<RLEvent>>('/events', {
       params: {
-        after: new Date().toISOString(),
-        sort: 'startDate:asc',
+        sort: 'start_date',
+        order: 'desc',
         mode: 3,
-        region: tempRegions
+        region: 'INT',
+        tier: 'S',
+        perPage: 50
       }
     })
 
     return res.data
   }
 
-  async event(id: string) {
-    const res = await this.client.get<RLEvent>(`/events/${id}`)
+  async event(slug: string) {
+    const res = await this.client.get<RLEvent>(`/events/${slug}`)
 
     return res.data
   }
 
-  async eventMatches(id: string) {
-    const res = await this.client.get<{ matches: RLMatch[] }>(`/events/${id}/matches`)
+  async eventMatches(slug: string) {
+    const res = await this.client.get<{ matches: RLMatch[] }>(`/matches`, {
+      params: {
+        event: slug
+      }
+    })
 
     return res.data
   }
@@ -42,38 +48,28 @@ class RLService {
     return res.data
   }
 
-  async results(day: string) {
-    const after = new Date(day)
-    after.setHours(0, 0, 0, 0)
-
-    const before = new Date(day)
-    before.setHours(23, 59, 59, 999)
-
-    const now = new Date()
-    if (before > now) {
-      before.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds())
-    }
-
-    const res = await this.client.get<PaginatedResponse<{ matches: RLMatch[] }>>('/matches', {
+  async results(eventSlug: string) {
+    const res = await this.client.get<PaginatedResponse<RLMatch>>('/matches', {
       params: {
-        after: after.toISOString(),
-        before: before.toISOString(),
-        sort: 'date:asc',
+        after: new Date().toISOString(),
+        sort: 'date',
         mode: 3,
-        region: tempRegions
+        perPage: 50,
+        event: eventSlug
       }
     })
 
     return res.data
   }
 
-  async matches() {
-    const res = await this.client.get<PaginatedResponse<{ matches: RLMatch[] }>>('/matches', {
+  async matches(eventSlug: string) {
+    const res = await this.client.get<PaginatedResponse<RLMatch>>('/matches', {
       params: {
-        after: new Date().toISOString(),
-        sort: 'date:asc',
+        before: new Date().toISOString(),
+        sort: 'date',
         mode: 3,
-        region: tempRegions
+        perPage: 50,
+        event: eventSlug
       }
     })
 
@@ -109,7 +105,7 @@ class RLService {
   }
 
   async search() {
-    const res = await this.client.get<PaginatedResponse<{ events: RLEvent[] }>>('/search', {
+    const res = await this.client.get<PaginatedResponse<RLEvent>>('/search', {
       params: {
         relavant: true,
         type: 'event'

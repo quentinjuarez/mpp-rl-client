@@ -76,8 +76,12 @@ class UsersService {
     return res.data
   }
 
-  async getLeaderboard() {
-    const res = await this.client.get<{ leaderboard: any[] }>('/users/leaderboard')
+  async getLeaderboard(eventSlug?: string) {
+    const res = await this.client.get<{ leaderboard: any[] }>('/users/leaderboard', {
+      params: {
+        event: eventSlug
+      }
+    })
 
     return res.data
   }

@@ -2,7 +2,7 @@
   <RouterLink
     :to="{
       name: 'event',
-      params: { id: props.event._id }
+      params: { slug: props.event.slug }
     }"
     class="flex w-full items-center justify-between p-2 transition-all hover:bg-white/10"
   >

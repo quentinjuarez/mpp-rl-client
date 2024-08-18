@@ -1,0 +1,59 @@
+import { getFormatWithMatches } from '@/scrapping/format'
+import { getInfo } from '@/scrapping/info'
+import { getTeams } from '@/scrapping/teams'
+import type { AxiosInstance } from 'axios'
+
+class ScrappingService {
+  client: AxiosInstance
+
+  constructor(client: AxiosInstance) {
+    this.client = client
+  }
+
+  private async parseEventPage(eventUrl: string) {
+    const cachedDoc = localStorage.getItem(`eventName-${eventUrl}`)
+    if (cachedDoc) {
+      return new DOMParser().parseFromString(cachedDoc, 'text/html')
+    }
+
+    const response = await this.client.get('/proxy', {
+      params: {
+        url: `https://liquipedia.net${eventUrl}`
+      }
+    })
+
+    const html = response.data
+
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+
+    // remove body.nav, body.#wiki-nav, body.footer, script elements
+    doc.body?.querySelector('nav')?.remove()
+    doc.body?.querySelector('#wiki-nav')?.remove()
+    doc.body?.querySelector('footer')?.remove()
+    doc.querySelectorAll('script').forEach((script) => script.remove())
+    doc.querySelectorAll('style').forEach((style) => style.remove())
+
+    console.log('doc', doc)
+
+    localStorage.setItem(`eventName-${eventUrl}`, doc.documentElement.outerHTML)
+
+    return doc
+  }
+
+  byUrl = async (eventUrl: string): Promise<RLEvent> => {
+    const doc = await this.parseEventPage(eventUrl)
+
+    const info = getInfo(doc)
+    const participants = getTeams(doc)
+    const formats = getFormatWithMatches(doc)
+
+    return {
+      url: eventUrl,
+      ...info,
+      participants,
+      formats
+    }
+  }
+}
+
+export default ScrappingService

@@ -4,6 +4,13 @@
       <p>Loading...</p>
     </div>
     <div v-else class="space-y-4">
+      <!-- RETURN BTN -->
+      <Button
+        v-if="route.name === 'event'"
+        icon="pi pi-chevron-left"
+        label="Back"
+        @click="onBack"
+      ></Button>
       <h1 class="text-4xl font-bold">{{ event.name }}</h1>
 
       <div class="flex items-center gap-2">
@@ -11,9 +18,9 @@
           <img :src="region.flag" class="size-4 object-contain" /> <span>{{ region.label }}</span>
         </p>
         <p>-</p>
-        <p>{{ formatDate(event.startDate) }}</p>
+        <p>{{ formatDate(event.start_date) }}</p>
         <p>-</p>
-        <p>{{ formatDate(event.endDate) }}</p>
+        <p>{{ formatDate(event.end_date) }}</p>
       </div>
       <div>
         <h2 class="mb-2 text-xl font-bold">Prize</h2>
@@ -30,13 +37,13 @@
       </div>
       <div>
         <h2 class="mb-2 text-xl font-bold">Stages</h2>
-        <div v-if="event.stages.length" class="space-y-2">
+        <div v-if="event.stages?.length" class="space-y-2">
           <Card v-for="stage in event.stages" :key="stage._id">
             <template #title>
               {{ stage.name }}
             </template>
             <template #content>
-              <p>{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
+              <p>{{ formatDate(stage.start_date) }} - {{ formatDate(stage.end_date) }}</p>
               <p>
                 <a :href="stage.liquipedia" target="_blank" class="underline"> Liquipedia </a>
               </p>
@@ -82,4 +89,13 @@ const { event } = storeToRefs(RLStore)
 const region = computed(() => {
   return getRegion(event.value?.region)
 })
+
+const router = useRouter()
+const route = useRoute()
+
+const onBack = () => {
+  router.push({
+    name: 'events'
+  })
+}
 </script>

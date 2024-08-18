@@ -13,7 +13,7 @@ const RLStore = useRLStore()
 function groupEventsByDay(events: RLEvent[]) {
   return events.reduce(
     (acc, event) => {
-      const date = event.startDate.split('T')[0] // Get the date in YYYY-MM-DD format
+      const date = event.start_date?.split('T')[0] || 'TBD' // Get the date in YYYY-MM-DD format
       if (!acc[date]) {
         acc[date] = []
       }

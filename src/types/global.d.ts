@@ -15,8 +15,8 @@ declare global {
     _id: number
     blue: number
     orange: number
-    matchId: string
-    eventId: string
+    matchSlug: string
+    eventSlug: string
     userId: number
     processed: boolean
     correct: boolean

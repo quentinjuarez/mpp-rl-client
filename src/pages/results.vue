@@ -2,13 +2,6 @@
   <div class="space-y-4">
     <h1 class="flex items-center gap-4 text-4xl font-bold">
       <span>Results</span>
-      <DatePicker
-        class="*:!px-2 *:!py-0"
-        v-model="date"
-        showIcon
-        :maxDate="now"
-        @update:modelValue="onUpdate"
-      />
     </h1>
 
     <div class="space-y-2">
@@ -50,28 +43,4 @@ function groupMatchesByDay(matches: RLMatch[]) {
 }
 
 const groupedMatches = computed(() => groupMatchesByDay(RLStore.matches))
-
-const route = useRoute()
-const router = useRouter()
-
-const date = ref(route.query.date ? new Date(route.query.date as string) : new Date())
-
-const now = ref(new Date())
-
-const onUpdate = (value: Date | Date[] | (Date | null)[] | null | undefined) => {
-  if (!value || Array.isArray(value)) return
-
-  let date: string | undefined = new Date(value).toDateString()
-
-  const now = new Date().toDateString()
-
-  if (date === now) {
-    date = undefined
-  }
-  router.push({
-    query: {
-      date
-    }
-  })
-}
 </script>

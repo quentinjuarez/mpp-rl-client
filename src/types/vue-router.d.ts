@@ -1,10 +1,6 @@
 export {}
 
 declare module 'vue-router' {
-  interface RouteMeta {
-    middlewares?: NavigationGuard[]
-  }
-
   interface RouteRecordRaw {
     meta?: RouteMeta
     name: string | null | undefined

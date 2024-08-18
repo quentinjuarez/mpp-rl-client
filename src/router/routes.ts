@@ -65,11 +65,19 @@ const routes = [
         }
       },
       {
-        path: 'events/:id',
+        path: 'events/:slug',
         name: 'event',
         component: () => import('@/pages/event.vue'),
         meta: {
-          middlewares: [isAuth, getMe(false), getEvent]
+          middlewares: [isAuth, getMe(false), getEvent(false)]
+        }
+      },
+      {
+        path: 'current-event',
+        name: 'current-event',
+        component: () => import('@/pages/event.vue'),
+        meta: {
+          middlewares: [isAuth, getMe(false), getEvent(true)]
         }
       },
       {
@@ -81,7 +89,7 @@ const routes = [
         }
       },
       {
-        path: 'matches/:id',
+        path: 'matches/:slug',
         name: 'match',
         component: () => import('@/pages/match.vue'),
         meta: {
