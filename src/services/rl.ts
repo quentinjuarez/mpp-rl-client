@@ -30,20 +30,12 @@ class RLService {
     return res.data
   }
 
-  async eventMatches(slug: string) {
-    const res = await this.client.get<{ matches: RLMatch[] }>(`/matches`, {
+  async eventMatches(eventSlug: string) {
+    const res = await this.client.get<PaginatedResponse<RLMatch>>(`/matches`, {
       params: {
-        event: slug
+        event: eventSlug
       }
     })
-
-    return res.data
-  }
-
-  async eventParticipants(id: string) {
-    const res = await this.client.get<{ participants: RLParticipant[] }>(
-      `/events/${id}/participants`
-    )
 
     return res.data
   }
@@ -54,7 +46,7 @@ class RLService {
         after: new Date().toISOString(),
         sort: 'date',
         mode: 3,
-        perPage: 50,
+        perPage: 100,
         event: eventSlug
       }
     })
@@ -68,7 +60,7 @@ class RLService {
         before: new Date().toISOString(),
         sort: 'date',
         mode: 3,
-        perPage: 50,
+        perPage: 100,
         event: eventSlug
       }
     })
@@ -76,28 +68,22 @@ class RLService {
     return res.data
   }
 
-  async match(id: string) {
-    const res = await this.client.get<RLMatch>(`/matches/${id}`)
+  async match(slug: string) {
+    const res = await this.client.get<RLMatch>(`/matches/${slug}`)
 
     return res.data
   }
 
-  async matchGames(id: string) {
-    const res = await this.client.get<{ games: RLGame[] }>(`/matches/${id}/games`)
+  async team(slug: string) {
+    const res = await this.client.get<RLTeam>(`/teams/${slug}`)
 
     return res.data
   }
 
-  async team(id: string) {
-    const res = await this.client.get<RLTeam>(`/teams/${id}`)
-
-    return res.data
-  }
-
-  async teamPlayers(id: string) {
-    const res = await this.client.get<{ players: RLPlayer[] }>(`/players`, {
+  async teamPlayers(slug: string) {
+    const res = await this.client.get<PaginatedResponse<RLPlayer>>(`/players`, {
       params: {
-        team: id
+        team: slug
       }
     })
 

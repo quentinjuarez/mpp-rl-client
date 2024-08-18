@@ -5,9 +5,9 @@
     </div>
     <div v-else class="space-y-4">
       <h1 class="flex justify-between text-4xl font-bold">
-        <TeamLabel :team="match.blue?.team.team" class="w-[calc(50%-8px)]" />
+        <TeamLabel link :team="match.blue?.team.team" class="w-[calc(50%-8px)]" />
         <span class="w-4 text-center">-</span>
-        <TeamLabel :team="match.orange?.team.team" class="w-[calc(50%-8px)]" reverse />
+        <TeamLabel link :team="match.orange?.team.team" class="w-[calc(50%-8px)]" reverse />
       </h1>
 
       <h2 class="text-2xl font-bold">
@@ -15,7 +15,7 @@
           :to="{
             name: 'event',
             params: {
-              id: match.event._id
+              slug: match.event.slug
             }
           }"
         >
@@ -35,18 +35,18 @@
             <template #title>
               <div class="flex w-18 flex-none justify-center gap-2">
                 <Tag
-                  :value="String(game.blue?.team.stats.core.goals || 0)"
+                  :value="String(game.blue || 0)"
                   severity="info"
                   :class="{
-                    border: game.blue?.winner
+                    border: game.blue > game.orange
                   }"
                 />
                 <span>-</span>
                 <Tag
-                  :value="String(game.orange?.team.stats.core.goals || 0)"
+                  :value="String(game.orange || 0)"
                   severity="warn"
                   :class="{
-                    border: game.orange?.winner
+                    border: game.orange > game.blue
                   }"
                 />
               </div>

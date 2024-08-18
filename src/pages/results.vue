@@ -4,14 +4,16 @@
       <span>Results</span>
     </h1>
 
-    <div class="space-y-2">
+    <div v-if="RLStore.loading" class="text-center text-neutral-400">Loading...</div>
+
+    <div v-else class="space-y-2">
       <div class="space-y-2" v-for="(matches, day) in groupedMatches" :key="day">
         <h2 class="text-xl font-bold">{{ day }}</h2>
         <MatchItem
           v-for="match in matches"
           :key="match._id"
           :match="match"
-          :forecast="results[match._id]"
+          :forecast="results[match.slug]"
         />
       </div>
 

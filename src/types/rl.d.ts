@@ -73,38 +73,15 @@ declare global {
       }
     }
     number: number
+    games: RLGame[]
   }
 
   interface RLGame {
     _id: string
-    number: number
-    // match: Match
-    map: {
-      id: string
-      name: string
-    }
     duration: number
-    date: string
-    blue?: {
-      winner: boolean
-      matchWinner: boolean
-      team: {
-        team: RLTeam
-        stats: RLTeamStats
-      }
-      players: RLGamePlayer[]
-    }
-    orange?: {
-      winner: boolean
-      matchWinner: boolean
-      team: {
-        team: RLTeam
-        stats: RLTeamStats
-      }
-      players: OrangePlayer[]
-    }
+    orange: number
+    blue: number
     ballchasing: string
-    flipBallchasing: boolean
   }
 
   interface RLGamePlayer {

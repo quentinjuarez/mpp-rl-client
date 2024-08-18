@@ -32,13 +32,11 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.event = null
         this.loading = true
         const res = await this.$services.rl.event(id)
-        const resMatches = await this.$services.rl.eventMatches(id)
-        // const resParticipants = await this.$services.rl.eventParticipants(id)
+        const { data: resMatches } = await this.$services.rl.eventMatches(id)
 
         this.event = {
           ...res,
-          // participants: resParticipants.participants,
-          matches: resMatches.matches,
+          matches: resMatches,
           participants: []
         }
 
@@ -83,18 +81,13 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = false
       }
     },
-    async getMatch(id: string) {
+    async getMatch(slug: string) {
       try {
         this.loading = true
         this.match = null
-        const res = await this.$services.rl.match(id)
-        // const resGames = await this.$services.rl.matchGames(id)
+        const res = await this.$services.rl.match(slug)
 
-        this.match = {
-          ...res,
-          // games: resGames.games
-          games: []
-        }
+        this.match = res
 
         return true
       } catch (error) {
@@ -104,15 +97,15 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = false
       }
     },
-    async getTeam(id: string) {
+    async getTeam(slug: string) {
       try {
         this.loading = true
-        const res = await this.$services.rl.team(id)
-        const resPlayers = await this.$services.rl.teamPlayers(id)
+        const res = await this.$services.rl.team(slug)
+        const { data: resPlayers } = await this.$services.rl.teamPlayers(slug)
 
         this.team = {
           ...res,
-          players: resPlayers.players
+          players: resPlayers
         }
 
         return true

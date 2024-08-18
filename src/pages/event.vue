@@ -4,13 +4,6 @@
       <p>Loading...</p>
     </div>
     <div v-else class="space-y-4">
-      <!-- RETURN BTN -->
-      <Button
-        v-if="route.name === 'event'"
-        icon="pi pi-chevron-left"
-        label="Back"
-        @click="onBack"
-      ></Button>
       <h1 class="text-4xl font-bold">{{ event.name }}</h1>
 
       <div class="flex items-center gap-2">
@@ -89,13 +82,4 @@ const { event } = storeToRefs(RLStore)
 const region = computed(() => {
   return getRegion(event.value?.region)
 })
-
-const router = useRouter()
-const route = useRoute()
-
-const onBack = () => {
-  router.push({
-    name: 'events'
-  })
-}
 </script>

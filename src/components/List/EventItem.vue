@@ -2,7 +2,8 @@
   <RouterLink
     :to="{
       name: 'event',
-      params: { slug: props.event.slug }
+      params: { slug: props.event.slug },
+      query: { from: $route.fullPath }
     }"
     class="flex w-full items-center justify-between p-2 transition-all hover:bg-white/10"
   >

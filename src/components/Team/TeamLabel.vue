@@ -1,7 +1,7 @@
 <template>
   <component
     :is="props.link ? 'RouterLink' : 'div'"
-    :to="{ name: 'team', params: { id: props.team._id } }"
+    :to="{ name: 'team', params: { slug: props.team.slug } }"
     class="flex items-center gap-2"
     :class="{
       'flex-row-reverse': props.reverse
@@ -15,7 +15,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    team?: RLTeam
+    team?: RLTeam | RLEnrichedTeam
     reverse?: boolean
     link?: boolean
   }>(),

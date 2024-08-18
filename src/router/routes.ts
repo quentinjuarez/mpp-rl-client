@@ -97,7 +97,7 @@ const routes = [
         }
       },
       {
-        path: 'teams/:id',
+        path: 'teams/:slug',
         name: 'team',
         component: () => import('@/pages/team.vue'),
         meta: {

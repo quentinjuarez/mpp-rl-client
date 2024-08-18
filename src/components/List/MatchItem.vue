@@ -5,6 +5,9 @@
       params: { slug: props.match.slug }
     }"
     class="flex w-full items-center justify-between gap-8 p-2 transition-all hover:bg-white/10"
+    :class="{
+      'bg-green-500/10 hover:bg-green-500/20': props.forecast?.exact
+    }"
   >
     <div class="flex w-full items-center">
       <TeamLabel :team="props.match.blue?.team.team" class="w-[calc(50%-36px)]" />
@@ -14,7 +17,11 @@
             :value="String(props.match.blue?.score || 0)"
             severity="info"
             :class="{
-              border: props.match.blue?.winner
+              border: props.match.blue?.winner,
+              'border-green-500':
+                props.match.blue?.winner && props.forecast && props.forecast.correct,
+              'border-red-500':
+                props.match.blue?.winner && props.forecast && !props.forecast.correct
             }"
           />
           <span>-</span>
@@ -22,7 +29,11 @@
             :value="String(props.match.orange?.score || 0)"
             severity="warn"
             :class="{
-              border: props.match.orange?.winner
+              border: props.match.orange?.winner,
+              'border-green-500':
+                props.match.orange?.winner && props.forecast && props.forecast.correct,
+              'border-red-500':
+                props.match.orange?.winner && props.forecast && !props.forecast.correct
             }"
           />
         </div>
