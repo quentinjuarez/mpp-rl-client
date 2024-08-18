@@ -1,5 +1,15 @@
 import { extractBracketData, getSwissResults } from './results'
 
+type RLFormat = {
+  name: string
+  stages: RLStage[]
+}
+
+type RLStage = {
+  name: string
+  matches: RLMatch[]
+}
+
 export const getFormatWithMatches = (doc: Document): RLFormat[] => {
   const swiss = doc.querySelectorAll('.brkts-matchlist-title')
 

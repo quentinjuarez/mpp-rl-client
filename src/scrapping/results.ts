@@ -56,7 +56,7 @@ const getMatchResults = (match: Element): RLMatch | null => {
       winner: teams[1].classList.contains('brkts-matchlist-slot-winner'),
       url: popupTeamsLinks?.[1]?.getAttribute('href') || null
     }
-  }
+  } as unknown as RLMatch
 }
 
 export function extractBracketData(doc: Document, round: number) {
@@ -168,5 +168,5 @@ const getMatchFromBracket = (match: Element): RLMatch | null => {
       winner: !!teams[1]?.querySelector('.brkts-opponent-entry-left.brkts-opponent-win'),
       url: popupTeamsLinks?.[1]?.getAttribute('href') || null
     }
-  }
+  } as unknown as RLMatch
 }

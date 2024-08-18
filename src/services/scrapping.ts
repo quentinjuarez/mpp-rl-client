@@ -52,7 +52,7 @@ class ScrappingService {
       ...info,
       participants,
       formats
-    }
+    } as unknown as RLEvent
   }
 }
 

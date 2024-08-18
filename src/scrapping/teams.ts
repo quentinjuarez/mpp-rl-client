@@ -14,14 +14,14 @@ const getTeam = (teamCard: Element): RLTeam => {
     region: queryAttr(teamCard, 'center .flag a', 'title'),
     logo: queryImg(teamCard, '.wikitable.logo img'),
     players: getPlayers(teamCard)
-  }
+  } as unknown as RLTeam
 }
 
 const getPlayers = (teamCard: Element): RLPlayer[] => {
   const rows = teamCard.querySelectorAll('.teamcard-inner .wikitable.list tbody tr')
   return Array.from(rows)
     .map(getPlayer)
-    .filter((player) => player !== null)
+    .filter((player) => player !== null) as RLPlayer[]
 }
 
 const getPlayer = (row: Element): RLPlayer | null => {
@@ -33,13 +33,13 @@ const getPlayer = (row: Element): RLPlayer | null => {
   const isSubstitute = queryText(row, 'th') === 'S'
 
   return playerName
-    ? {
+    ? ({
         name: playerName,
         url: playerUrl,
         country: playerCountry,
         flag: playerFlagImg,
         isCoach,
         isSubstitute
-      }
+      } as unknown as RLPlayer)
     : null
 }
