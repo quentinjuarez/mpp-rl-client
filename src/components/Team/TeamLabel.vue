@@ -7,8 +7,8 @@
       'flex-row-reverse': props.reverse
     }"
   >
-    <img :src="image" class="size-8 rounded bg-white/10 object-contain p-1" />
-    <span class="truncate">{{ props.team.name }}</span>
+    <img :src="image" class="size-24 rounded-full bg-white/10 object-contain p-1" />
+    <!-- <span class="truncate">{{ props.team.name }}</span> -->
   </component>
 </template>
 
@@ -16,6 +16,7 @@
 const props = withDefaults(
   defineProps<{
     team?: RLTeam | RLEnrichedTeam
+    color: 'blue' | 'orange'
     reverse?: boolean
     link?: boolean
   }>(),
