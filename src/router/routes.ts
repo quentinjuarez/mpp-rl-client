@@ -19,6 +19,7 @@ const routes = [
       {
         path: '',
         name: 'home',
+        redirect: { name: 'forecasts' },
         component: () => import('@/pages/home.vue'),
         meta: {
           middlewares: [isAuth, getMe(false)]

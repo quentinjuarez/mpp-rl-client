@@ -2,9 +2,11 @@
   <div class="space-y-4">
     <h1 class="text-4xl font-bold">Forecasts</h1>
 
-    <div v-if="RLStore.loading" class="text-center text-neutral-400">Loading...</div>
+    <div v-if="RLStore.loading || store.loading" class="text-center text-neutral-400">
+      Loading...
+    </div>
 
-    <div v-else class="space-y-2">
+    <div v-else class="mx-auto flex flex-col items-center">
       <div class="space-y-4" v-for="(matches, day) in groupedMatches" :key="day">
         <h2 class="text-xl font-bold">{{ day }}</h2>
         <ForecastItem v-for="match in matches" :key="match._id" :match="match" />
@@ -19,11 +21,13 @@
 
 <script setup lang="ts">
 const RLStore = useRLStore()
+const store = useStore()
 
 function groupMatchesByDay(matches: RLMatch[]) {
   return matches.reduce(
     (acc, match) => {
-      const date = new Date(match.date).toLocaleDateString() // Get the date in YYYY-MM-DD format
+      const date = formatDate(match.date)
+
       if (!acc[date]) {
         acc[date] = []
       }

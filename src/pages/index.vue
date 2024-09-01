@@ -2,7 +2,7 @@
   <div class="relative">
     <NavBar />
 
-    <div class="mx-auto mt-8 min-h-screen w-full max-w-screen-md px-6">
+    <div class="mx-auto mt-8 min-h-screen w-full max-w-screen-xl px-6">
       <!-- RETURN BTN -->
       <Button
         v-if="route.query.from"
@@ -14,6 +14,8 @@
 
       <RouterView />
     </div>
+
+    <MobileTabs />
   </div>
 </template>
 

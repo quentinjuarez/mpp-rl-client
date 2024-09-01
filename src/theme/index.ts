@@ -123,5 +123,7 @@ export const EXTENDED_COLORS = {
   transparent: 'transparent',
   current: 'currentColor',
   black: '#000000',
-  white: '#ffffff'
+  white: '#ffffff',
+  blue: '#1778f7',
+  orange: '#ff5b00'
 }
