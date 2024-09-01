@@ -5,9 +5,15 @@
     </div>
     <div v-else class="space-y-4">
       <h1 class="flex justify-between text-4xl font-bold">
-        <TeamLabel link :team="match.blue?.team.team" class="w-[calc(50%-8px)]" />
+        <TeamLabel link :team="match.blue?.team.team" color="blue" class="w-[calc(50%-8px)]" />
         <span class="w-4 text-center">-</span>
-        <TeamLabel link :team="match.orange?.team.team" class="w-[calc(50%-8px)]" reverse />
+        <TeamLabel
+          link
+          :team="match.orange?.team.team"
+          color="orange"
+          class="w-[calc(50%-8px)]"
+          reverse
+        />
       </h1>
 
       <h2 class="text-2xl font-bold">

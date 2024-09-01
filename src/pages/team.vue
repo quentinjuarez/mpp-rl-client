@@ -6,7 +6,7 @@
 
     <div v-else class="space-y-4">
       <h1 class="text-4xl font-bold">
-        <TeamLabel :team="RLStore.team" />
+        <TeamLabel :team="RLStore.team" color="blue" />
       </h1>
 
       <div class="space-y-2">

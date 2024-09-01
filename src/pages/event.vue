@@ -57,6 +57,7 @@
             v-for="participant in event.participants"
             :key="participant.team._id"
             :team="participant.team"
+            color="blue"
             link
           />
         </div>
