@@ -49,10 +49,10 @@ export const useRLStore = defineStore('mpp-rl-data', {
         this.loading = false
       }
     },
-    async getMatches() {
+    async getMatches(dev?: boolean) {
       try {
         this.loading = true
-        const { data } = await this.$services.rl.matches(this.currentEvent)
+        const { data } = await this.$services.rl.matches(this.currentEvent, dev)
 
         this.matches = data
 

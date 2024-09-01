@@ -54,10 +54,10 @@ class RLService {
     return res.data
   }
 
-  async matches(eventSlug: string) {
+  async matches(eventSlug: string, dev?: boolean) {
     const res = await this.client.get<PaginatedResponse<RLMatch>>('/matches', {
       params: {
-        before: new Date().toISOString(),
+        [dev ? 'after' : 'before']: new Date().toISOString(),
         sort: 'date',
         mode: 3,
         perPage: 100,

@@ -1,7 +1,9 @@
-const getMatches = (_to: any, _from: any, next: any) => {
+const getMatches = (to: any, _from: any, next: any) => {
   const RLStore = useRLStore()
 
-  RLStore.getMatches()
+  const dev = to.query.mode === 'dev'
+
+  RLStore.getMatches(dev)
 
   next()
 }
