@@ -11,6 +11,10 @@ html {
   height: calc(var(--vh, 1vh) * 100);
 }
 
+:root {
+  --mpp-rl-primary-contrast-color: #fff !important;
+}
+
 .p-divider-content {
   background-color: #121212 !important;
 }

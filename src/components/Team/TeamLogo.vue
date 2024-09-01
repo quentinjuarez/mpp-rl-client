@@ -1,14 +1,22 @@
 <template>
   <component
-    :is="props.link ? 'RouterLink' : 'div'"
+    :is="props.link ? 'RouterLink' : 'button'"
     :to="{ name: 'team', params: { slug: props.team.slug } }"
     class="flex items-center gap-2"
     :class="{
       'flex-row-reverse': props.reverse
     }"
   >
-    <img :src="image" class="size-8 rounded-full object-contain p-1" />
-    <span class="hidden truncate md:flex">{{ props.team.name }}</span>
+    <div
+      class="overflow-hidden rounded-full transition-all hover:scale-105"
+      :class="{
+        'scale-105': props.color === props.winner,
+        'scale-95 opacity-20': props.color !== props.winner && props.winner !== undefined
+      }"
+    >
+      <img :src="image" class="m-2 size-24 object-contain" />
+    </div>
+    <!-- <span class="truncate">{{ props.team.name }}</span> -->
   </component>
 </template>
 
@@ -16,7 +24,8 @@
 const props = withDefaults(
   defineProps<{
     team?: RLTeam | RLEnrichedTeam
-    color: 'blue' | 'orange'
+    color?: 'blue' | 'orange'
+    winner?: 'blue' | 'orange'
     reverse?: boolean
     link?: boolean
   }>(),

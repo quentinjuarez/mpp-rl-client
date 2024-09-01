@@ -198,6 +198,7 @@ export const useStore = defineStore('mpp-rl-store', {
     },
     async getForecastResults() {
       try {
+        this.loading = true
         const res = await this.$services.forecasts.getForecastResults()
 
         this.results = res.forecasts
@@ -205,6 +206,8 @@ export const useStore = defineStore('mpp-rl-store', {
       } catch (error) {
         this.results = {}
         return false
+      } finally {
+        this.loading = false
       }
     }
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="dark min-h-screen font-custom selection:bg-violet-500 selection:text-white">
+  <div class="dark min-h-screen bg-neutral-900 font-custom selection:bg-blue selection:text-white">
     <RouterView />
   </div>
 </template>

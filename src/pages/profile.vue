@@ -117,7 +117,9 @@
 
     <Divider></Divider>
 
-    <Button as="router-link" to="/logout" class="mb-auto w-full" severity="danger">Logout</Button>
+    <Button as="router-link" to="/logout" class="mb-auto w-full !bg-red-500" severity="danger"
+      >Logout</Button
+    >
   </div>
 </template>
 

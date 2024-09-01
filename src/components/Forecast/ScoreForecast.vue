@@ -1,127 +1,148 @@
 <template>
-  <div>
+  <div class="space-y-2" :id="props.match.slug">
     <div class="text-center text-neutral-400">
       {{ time }}
     </div>
-    <div class="flex w-[120px] flex-none items-center justify-center gap-2">
-      <div id="blue" :style="blueStyle">
+    <div class="flex w-[153px] flex-none items-center justify-center gap-4" v-if="winner">
+      <div
+        id="blue"
+        class="rounded-md border-2 border-white bg-neutral-700 selection:bg-blue selection:text-white"
+        :class="{
+          '!border-red-500': blueError,
+          '!border-blue': winner === 'blue'
+        }"
+      >
         <InputMask
-          class="h-[36px] w-[48px] !bg-transparent !p-0.5 text-center"
-          v-model="blue"
+          class="size-[48px] !border-none !bg-transparent !p-0.5 text-center"
+          v-model="blueText"
           mask="9"
-          placeholder="0"
-          :invalid="error"
-          :class="{
-            '!border-red-500': error
-          }"
-          @keydown="debouncedUpdateForecast"
+          placeholder="_"
+          :invalid="blueError"
+          :disabled="winner === 'blue'"
+          @keydown="handleUpdate"
         />
       </div>
 
-      <span>-</span>
+      <Icon :name="error ? 'times' : 'check'" class="text-neutral-400" />
 
-      <div id="orange" :style="orangeStyle">
+      <div
+        id="orange"
+        class="rounded-md border-2 border-white bg-neutral-700 selection:bg-orange selection:text-white"
+        :class="{
+          '!border-red-500': orangeError,
+          '!border-orange': winner === 'orange'
+        }"
+      >
         <InputMask
-          class="h-[36px] w-[48px] !bg-transparent !p-0.5 text-center"
-          v-model="orange"
+          class="size-[48px] !border-none !bg-transparent !p-0.5 text-center"
+          v-model="orangeText"
           mask="9"
-          placeholder="0"
-          :invalid="error"
-          :class="{
-            '!border-red-500': error
-          }"
-          @keydown="debouncedUpdateForecast"
+          placeholder="_"
+          :invalid="orangeError"
+          :disabled="winner === 'orange'"
+          @keydown="handleUpdate"
         />
       </div>
     </div>
+    <div v-else class="w-[153px] text-center">Choose a winner</div>
 
     <div class="text-center text-neutral-400">Best of {{ props.match.format.length }}</div>
+    <!-- <div>Text {{ blueText }} - {{ orangeText }}</div>
+    <div>Number {{ props.blue }} - {{ props.orange }}</div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash.debounce'
-
 const props = defineProps<{
   match: RLMatch
+  forecast?: Forecast
+  winner?: 'blue' | 'orange'
+  blue?: number
+  orange?: number
+  maxScore: number
 }>()
 
-const store = useStore()
+const blueText = ref<string>(props.blue !== undefined ? String(props.blue) : '')
+const orangeText = ref<string>(props.orange !== undefined ? String(props.orange) : '')
 
-const { forecasts } = storeToRefs(store)
+const orangeError = computed(() => {
+  if (props.orange === undefined) return true
 
-const forecast = ref()
-const blue = ref()
-const orange = ref()
-
-onMounted(() => {
-  forecast.value = forecasts.value.find((f) => f.matchSlug === props.match.slug)
-
-  blue.value = forecast.value?.blue
-  orange.value = forecast.value?.orange
+  return props.orange > props.maxScore
 })
 
-const blueStyle = computed(() => ({
-  borderRadius: 'var(--mpp-rl-inputtext-border-radius) !important',
-  background: 'var(--mpp-rl-tag-info-background) !important',
-  color: 'var(--mpp-rl-tag-info-color) !important'
-}))
+const blueError = computed(() => {
+  if (props.blue === undefined) return true
 
-const orangeStyle = computed(() => ({
-  borderRadius: 'var(--mpp-rl-inputtext-border-radius) !important',
-  background: 'var(--mpp-rl-tag-warn-background) !important',
-  color: 'var(--mpp-rl-tag-warn-color) !important'
-}))
-
-const maxScore = computed(() => {
-  const bestOf = props.match.format.length
-
-  return (bestOf % 2) + Math.floor(bestOf / 2)
+  return props.blue > props.maxScore
 })
-
-const clampScores = (editing: string) => {
-  blue.value = Math.min(Math.max(Number(blue.value || 0), 0), maxScore.value)
-  orange.value = Math.min(Math.max(Number(orange.value || 0), 0), maxScore.value)
-
-  if (blue.value === maxScore.value && orange.value === maxScore.value) {
-    if (editing === 'blue') {
-      orange.value = Math.min(Number(orange.value || 0), maxScore.value - 1)
-    } else {
-      blue.value = Math.min(Number(blue.value || 0), maxScore.value - 1)
-    }
-  }
-}
 
 const error = computed(() => {
-  if (blue.value === undefined && orange.value === undefined) return false
-
-  return Number(blue.value || 0) !== maxScore.value && Number(orange.value || 0) !== maxScore.value
+  return orangeError.value || blueError.value
 })
 
-const updateForecast = async (e: any) => {
-  const targetParentId = e.target.parentElement.id
+const emit = defineEmits<{
+  (event: 'update', value: { blue: string; orange: string }): void
+}>()
 
-  clampScores(targetParentId)
-
+const handleUpdate = () => {
   if (error.value) return
 
-  const res = await store.createOrUpdateForecast({
-    matchSlug: props.match.slug,
-    eventSlug: props.match.event.slug,
-    date: props.match.date,
-    blue: Number(blue.value || 0),
-    orange: Number(orange.value || 0)
-  })
+  setTimeout(() => {
+    blueText.value = preClampScore(blueText.value, 'blue')
+    orangeText.value = preClampScore(orangeText.value, 'orange')
 
-  if (res) {
-    forecast.value = res
-  }
+    emit('update', {
+      blue: blueText.value,
+      orange: orangeText.value
+    })
+  }, 50)
 }
 
-const debouncedUpdateForecast = debounce(updateForecast, 500)
+const preClampScore = (val: string, color: 'blue' | 'orange') => {
+  if (val === '') return val
+
+  return String(
+    Math.min(Math.max(Number(val), 0), props.maxScore - (props.winner !== color ? 1 : 0))
+  )
+}
 
 const time = computed(() => {
   const date = new Date(props.match.date)
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 })
+
+const focusInput = (targetId: string) => {
+  setTimeout(() => {
+    const test = document.getElementById(props.match.slug)
+    const input = test?.querySelector(`#${targetId}`)
+    input?.querySelector('input')?.focus()
+  }, 50)
+}
+
+watch(
+  () => props.winner,
+  (newValue) => {
+    if (!newValue) return
+    if (newValue === 'blue') {
+      focusInput('orange')
+    } else {
+      focusInput('blue')
+    }
+  }
+)
+
+watch(
+  () => props.blue,
+  (newValue) => {
+    blueText.value = newValue !== undefined ? String(newValue) : ''
+  }
+)
+
+watch(
+  () => props.orange,
+  (newValue) => {
+    orangeText.value = newValue !== undefined ? String(newValue) : ''
+  }
+)
 </script>

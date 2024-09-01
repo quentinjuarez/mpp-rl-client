@@ -1,23 +1,26 @@
 <template>
-  <header class="sticky inset-x-0 top-0 z-50 h-18 w-full bg-neutral-950">
+  <header
+    class="sticky inset-x-0 top-0 z-50 h-18 w-full border-b border-neutral-700 bg-neutral-900"
+  >
     <div class="mx-auto flex h-full max-w-screen-xl items-center justify-between px-6">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 md:gap-4">
         <div class="flex justify-center">
           <RouterLink
             to="/"
-            class="flex size-16 items-center justify-center rounded-full text-center"
+            class="flex h-full w-12 items-center justify-center rounded-full text-center md:w-16"
           >
             <Icon name="home" class="!text-2xl" />
           </RouterLink>
         </div>
 
-        <Tabs :value="focusRoute">
+        <Tabs :value="focusRoute" class="!hidden md:!flex">
           <TabList>
             <Tab
               v-for="tab in items"
               :key="tab.label"
               :value="tab.route"
               @click="handleClick(tab.route)"
+              class="!px-4"
             >
               <router-link v-if="tab.route" v-slot="{ href, navigate }" :to="tab.route" custom>
                 <a
@@ -26,8 +29,8 @@
                   @click="navigate"
                   class="flex items-center gap-2 text-inherit"
                 >
-                  <i :class="tab.icon" />
-                  <span>{{ tab.label }}</span>
+                  <i :class="tab.icon"></i>
+                  <span class="hidden md:block">{{ tab.label }}</span>
                 </a>
               </router-link>
             </Tab>
@@ -36,14 +39,36 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <Select
-          v-model="RLStore.currentEvent"
-          :options="events"
-          optionLabel="name"
-          optionValue="slug"
-          placeholder="Select an event"
-          class="w-full md:w-56"
-        />
+        <!-- DESKTOP -->
+        <div class="hidden md:flex">
+          <Select
+            v-model="RLStore.currentEvent"
+            :options="events"
+            optionLabel="name"
+            optionValue="slug"
+            placeholder="Select an event"
+            class="w-full md:w-48 lg:w-56"
+          >
+          </Select>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="md:hidden">
+          <Button @click="visible = true" icon="pi pi-calendar" size="small"></Button>
+
+          <Dialog v-model:visible="visible" modal header="Choose event" :style="{ width: '25rem' }">
+            <Select
+              v-model="RLStore.currentEvent"
+              :options="events"
+              optionLabel="name"
+              optionValue="slug"
+              placeholder="Select an event"
+              class="w-full"
+            >
+            </Select>
+          </Dialog>
+        </div>
+
         <Tag icon="pi pi-trophy" severity="success" :value="points"></Tag>
 
         <UserMenu />
@@ -58,13 +83,15 @@ const RLStore = useRLStore()
 const route = useRoute()
 const router = useRouter()
 
+const visible = ref(false)
+
 const items = ref([
   { route: '/forecasts', label: 'Forecasts', icon: 'pi pi-chart-line' },
-  {
-    route: `/current-event`,
-    label: 'Curent event',
-    icon: 'pi pi-calendar'
-  },
+  // {
+  //   route: `/current-event`,
+  //   label: 'Curent event',
+  //   icon: 'pi pi-calendar'
+  // },
   { route: '/results', label: 'Results', icon: 'pi pi-trophy' },
   { route: '/leaderboard', label: 'Leaderboard', icon: 'pi pi-list' }
 ])
@@ -110,6 +137,7 @@ watch(
 .p-tablist-tab-list {
   background: none !important;
   border: none !important;
+  height: 68px;
 }
 
 .p-tab {
