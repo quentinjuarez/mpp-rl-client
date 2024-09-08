@@ -114,11 +114,11 @@ const updateForecast = async (payload: { blue: string; orange: string }) => {
 const debouncedUpdateForecast = debounce(updateForecast, 500)
 
 const blueTeam = computed(() => {
-  return props.match.opponents[0].opponent
+  return props.match.opponents?.[0]?.opponent
 })
 
 const orangeTeam = computed(() => {
-  return props.match.opponents[1].opponent
+  return props.match.opponents?.[1]?.opponent
 })
 </script>
 

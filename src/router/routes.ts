@@ -3,7 +3,6 @@ import getMe from '@/middlewares/getMe'
 import getLeaderboard from '@/middlewares/getLeaderboard'
 import getForecasts from '@/middlewares/getForecasts'
 import getUser from '@/middlewares/getUser'
-import getResults from '@/middlewares/getResults'
 
 const routes = [
   {
@@ -57,7 +56,7 @@ const routes = [
         name: 'results',
         component: () => import('@/pages/results.vue'),
         meta: {
-          middlewares: [isAuth, getMe(false), getResults]
+          middlewares: [isAuth, getMe(false), getForecasts]
         }
       }
     ]

@@ -76,7 +76,7 @@ class UsersService {
     return res.data
   }
 
-  async getLeaderboard(serieId?: string) {
+  async getLeaderboard(serieId?: number) {
     const res = await this.client.get<{ leaderboard: any[] }>('/users/leaderboard', {
       params: {
         serieId

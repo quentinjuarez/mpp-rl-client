@@ -1,6 +1,6 @@
 import { getFormatWithMatches } from '@/scrapping/format'
-import { getInfo } from '@/scrapping/info'
-import { getTeams } from '@/scrapping/teams'
+import { getInfo } from '../../scrapping/info'
+import { getTeams } from '../../scrapping/teams'
 import type { AxiosInstance } from 'axios'
 
 class ScrappingService {

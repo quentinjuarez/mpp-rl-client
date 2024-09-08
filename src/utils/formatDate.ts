@@ -11,11 +11,4 @@ const formatDate = (date: string | Date): string => {
   })}`
 }
 
-export const getDay = (date: Date): string => {
-  const browserLocale = navigator.language
-
-  return `${date.toLocaleDateString(browserLocale, {
-    weekday: 'long'
-  })}`
-}
 export default formatDate

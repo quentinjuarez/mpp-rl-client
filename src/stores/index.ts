@@ -184,7 +184,7 @@ export const useStore = defineStore('mpp-rl-store', {
         return null
       }
     },
-    async getLeaderboard(serieId?: string) {
+    async getLeaderboard(serieId?: number) {
       try {
         const res = await this.$services.users.getLeaderboard(serieId)
 
@@ -204,20 +204,6 @@ export const useStore = defineStore('mpp-rl-store', {
         this.user = user
       } catch (error) {
         this.user = null
-      } finally {
-        this.loading = false
-      }
-    },
-    async getForecastResults() {
-      try {
-        this.loading = true
-        const res = await this.$services.forecasts.getForecastResults()
-
-        this.results = res.forecasts
-        return true
-      } catch (error) {
-        this.results = {}
-        return false
       } finally {
         this.loading = false
       }

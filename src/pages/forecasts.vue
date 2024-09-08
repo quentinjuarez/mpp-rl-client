@@ -106,4 +106,12 @@ const router = useRouter()
 watch(focusDay, () => {
   router.replace({ query: { d: focusDay.value.toISOString().split('T')[0] } })
 })
+
+const getDay = (date: Date): string => {
+  const browserLocale = navigator.language
+
+  return `${date.toLocaleDateString(browserLocale, {
+    weekday: 'long'
+  })}`
+}
 </script>

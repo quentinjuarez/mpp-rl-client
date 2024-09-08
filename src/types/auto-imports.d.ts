@@ -43,9 +43,6 @@ declare global {
   const onUpdated: typeof import('vue')['onUpdated']
   const plugin: typeof import('../stores/plugin')['default']
   const provide: typeof import('vue')['provide']
-  const queryAttr: typeof import('../utils/scrapping')['queryAttr']
-  const queryImg: typeof import('../utils/scrapping')['queryImg']
-  const queryText: typeof import('../utils/scrapping')['queryText']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
@@ -98,7 +95,6 @@ declare module 'vue' {
     readonly formatDate: UnwrapRef<typeof import('../utils/formatDate')['default']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly getDay: UnwrapRef<typeof import('../utils/formatDate')['getDay']>
     readonly getRegion: UnwrapRef<typeof import('../utils/getRegion')['default']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>

@@ -55,18 +55,6 @@ class ForecastsService {
 
     return res.data
   }
-
-  async getForecastResults(serieId?: string) {
-    const res = await this.client.get<{
-      forecasts: Record<string, Forecast>
-    }>('/forecasts/results', {
-      params: {
-        serieId
-      }
-    })
-
-    return res.data
-  }
 }
 
 export default ForecastsService
