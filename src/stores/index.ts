@@ -125,18 +125,18 @@ export const useStore = defineStore('mpp-rl-store', {
         return false
       }
     },
-    async getForecastPoints(eventSlug?: string) {
+    async getForecastPoints(serieId?: number) {
       try {
-        const res = await this.$services.forecasts.points(eventSlug)
+        const res = await this.$services.forecasts.points(serieId)
 
         return res.points
       } catch (error) {
         return 0
       }
     },
-    async getForecasts(eventSlug?: string) {
+    async getForecasts(serieId?: number) {
       try {
-        const res = await this.$services.forecasts.getAll(eventSlug)
+        const res = await this.$services.forecasts.getAll(serieId)
 
         this.forecasts = res.forecasts
         return true
@@ -148,33 +148,45 @@ export const useStore = defineStore('mpp-rl-store', {
     async createOrUpdateForecast({
       blue,
       orange,
-      matchSlug,
-      eventSlug,
+      matchId,
+      tournamentId,
+      serieId,
       date
     }: {
       blue: number
       orange: number
-      matchSlug: string
-      eventSlug: string
+      matchId: number
+      tournamentId: number
+      serieId: number
       date: string
     }) {
       try {
         const res = await this.$services.forecasts.createOrUpdate({
           blue,
           orange,
-          matchSlug,
-          eventSlug,
+          matchId,
+          tournamentId,
+          serieId,
           date
         })
+
+        // mutate forecast array
+        const index = this.forecasts.findIndex((f) => f.matchId === matchId)
+
+        if (index === -1) {
+          this.forecasts.push(res)
+        } else {
+          this.forecasts[index] = res
+        }
 
         return res
       } catch (error) {
         return null
       }
     },
-    async getLeaderboard(eventSlug?: string) {
+    async getLeaderboard(serieId?: string) {
       try {
-        const res = await this.$services.users.getLeaderboard(eventSlug)
+        const res = await this.$services.users.getLeaderboard(serieId)
 
         this.leaderboard = res.leaderboard
 

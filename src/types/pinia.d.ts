@@ -1,6 +1,6 @@
 import type UsersService from '@/services/users'
-import type RLService from '@/services/rl'
 import type ForecastsService from '@/services/forecasts'
+import type PandaScoreService from '@/services/ps'
 
 import type { Router } from 'vue-router'
 
@@ -9,7 +9,7 @@ declare module 'pinia' {
     $router: Router
     $services: {
       users: UsersService
-      rl: RLService
+      ps: PandaScoreService
       forecasts: ForecastsService
     }
   }

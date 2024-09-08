@@ -23,8 +23,6 @@
 </template>
 
 <script setup lang="ts">
-const store = useStore()
-const RLStore = useRLStore()
 const route = useRoute()
 const router = useRouter()
 
@@ -40,11 +38,8 @@ const items = ref([
 ])
 
 const mounted = ref(false)
-const points = ref(0)
 
 onMounted(async () => {
-  points.value = await store.getForecastPoints(RLStore.currentEvent)
-
   // fix initial focus route animation
   setTimeout(() => {
     mounted.value = true
@@ -61,13 +56,6 @@ const handleClick = (route: string) => {
   if (route === focusRoute.value) return
   router.push(route)
 }
-
-watch(
-  () => RLStore.currentEvent,
-  async () => {
-    window.location.reload()
-  }
-)
 </script>
 
 <style>

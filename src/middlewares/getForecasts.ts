@@ -1,4 +1,6 @@
-const getForecasts = (_to: any, _from: any, next: any) => {
+const getForecasts = (to: any, from: any, next: any) => {
+  if (to.name === from.name) return next()
+
   const store = useStore()
 
   store.getForecasts()

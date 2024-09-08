@@ -1,12 +1,7 @@
 <template>
   <div class="w-fit rounded-lg p-1 transition-all duration-500 hover:bg-white/5" :class="bgStyles">
     <div class="flex items-center gap-4 rounded-md bg-black/75 p-4 md:gap-8">
-      <TeamLogo
-        :team="props.match.blue?.team.team"
-        @click="onClick('blue')"
-        color="blue"
-        :winner="winner"
-      />
+      <TeamLogo :team="blueTeam" @click="onClick('blue')" color="blue" :winner="winner" />
       <ScoreForecast
         :match="props.match"
         :winner="winner"
@@ -17,7 +12,7 @@
         @update="debouncedUpdateForecast"
       />
       <TeamLogo
-        :team="props.match.orange?.team.team"
+        :team="orangeTeam"
         reverse
         @click="onClick('orange')"
         color="orange"
@@ -31,7 +26,7 @@
 import debounce from 'lodash.debounce'
 
 const props = defineProps<{
-  match: RLMatch
+  match: PSMatch
 }>()
 
 const store = useStore()
@@ -43,12 +38,12 @@ const blue = ref<number>()
 const orange = ref<number>()
 
 const maxScore = computed(() => {
-  const bestOf = props.match.format.length
+  const bestOf = props.match.number_of_games
 
   return (bestOf % 2) + Math.floor(bestOf / 2)
 })
 
-const forecast = computed(() => forecasts.value.find((f) => f.matchSlug === props.match.slug))
+const forecast = computed(() => forecasts.value.find((f) => f.matchId === props.match.id))
 
 onMounted(() => {
   if (!forecast.value) return
@@ -61,7 +56,12 @@ onMounted(() => {
 })
 
 function onClick(side: 'blue' | 'orange') {
+  if (side === winner.value) return
+
   winner.value = side
+
+  const isSwitch =
+    orange.value !== undefined && blue.value !== undefined && orange.value !== blue.value
 
   if (side === 'blue') {
     orange.value =
@@ -71,6 +71,10 @@ function onClick(side: 'blue' | 'orange') {
     blue.value =
       orange.value !== undefined && orange.value !== maxScore.value ? orange.value : undefined
     orange.value = maxScore.value
+  }
+
+  if (isSwitch) {
+    updateForecast({ blue: String(blue.value), orange: String(orange.value) })
   }
 }
 
@@ -98,15 +102,24 @@ const updateForecast = async (payload: { blue: string; orange: string }) => {
     blue.value === maxScore.value ? 'blue' : orange.value === maxScore.value ? 'orange' : undefined
 
   await store.createOrUpdateForecast({
-    matchSlug: props.match.slug,
-    eventSlug: props.match.event.slug,
-    date: props.match.date,
+    matchId: props.match.id,
+    serieId: props.match.serie_id,
+    tournamentId: props.match.tournament_id,
+    date: props.match.begin_at,
     blue: Number(blue.value || 0),
     orange: Number(orange.value || 0)
   })
 }
 
 const debouncedUpdateForecast = debounce(updateForecast, 500)
+
+const blueTeam = computed(() => {
+  return props.match.opponents[0].opponent
+})
+
+const orangeTeam = computed(() => {
+  return props.match.opponents[1].opponent
+})
 </script>
 
 <style scoped>

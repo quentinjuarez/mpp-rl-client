@@ -6,14 +6,14 @@
     <div class="flex w-[153px] flex-none items-center justify-center gap-4" v-if="winner">
       <div
         id="blue"
-        class="rounded-md border-2 border-white bg-neutral-700 selection:bg-blue selection:text-white"
+        class="rounded-md border-2 border-neutral-200 bg-neutral-700 selection:bg-blue selection:text-white"
         :class="{
           '!border-red-500': blueError,
           '!border-blue': winner === 'blue'
         }"
       >
         <InputMask
-          class="size-[48px] !border-none !bg-transparent !p-0.5 text-center"
+          class="size-12 !border-none !bg-transparent !p-0.5 text-center"
           v-model="blueText"
           mask="9"
           placeholder="_"
@@ -27,14 +27,14 @@
 
       <div
         id="orange"
-        class="rounded-md border-2 border-white bg-neutral-700 selection:bg-orange selection:text-white"
+        class="rounded-md border-2 border-neutral-200 bg-neutral-700 selection:bg-orange selection:text-white"
         :class="{
           '!border-red-500': orangeError,
           '!border-orange': winner === 'orange'
         }"
       >
         <InputMask
-          class="size-[48px] !border-none !bg-transparent !p-0.5 text-center"
+          class="size-12 !border-none !bg-transparent !p-0.5 text-center"
           v-model="orangeText"
           mask="9"
           placeholder="_"
@@ -46,7 +46,7 @@
     </div>
     <div v-else class="w-[153px] text-center">Choose a winner</div>
 
-    <div class="text-center text-neutral-400">Best of {{ props.match.format.length }}</div>
+    <div class="text-center text-neutral-400">Best of {{ props.match.number_of_games }}</div>
     <!-- <div>Text {{ blueText }} - {{ orangeText }}</div>
     <div>Number {{ props.blue }} - {{ props.orange }}</div> -->
   </div>
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  match: RLMatch
+  match: PSMatch
   forecast?: Forecast
   winner?: 'blue' | 'orange'
   blue?: number
@@ -86,8 +86,6 @@ const emit = defineEmits<{
 }>()
 
 const handleUpdate = () => {
-  if (error.value) return
-
   setTimeout(() => {
     blueText.value = preClampScore(blueText.value, 'blue')
     orangeText.value = preClampScore(orangeText.value, 'orange')
@@ -108,7 +106,7 @@ const preClampScore = (val: string, color: 'blue' | 'orange') => {
 }
 
 const time = computed(() => {
-  const date = new Date(props.match.date)
+  const date = new Date(props.match.begin_at)
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 })
 

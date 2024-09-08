@@ -1,6 +1,7 @@
 export {}
 
-declare global {
+// soft delete those types
+declare module 'rl.d.ts' {
   type PaginatedResponse<T> = {
     data: T[]
     page: number

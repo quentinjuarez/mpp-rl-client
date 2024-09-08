@@ -23,18 +23,18 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    team?: RLTeam | RLEnrichedTeam
+    team?: PSTeam
     color?: 'blue' | 'orange'
     winner?: 'blue' | 'orange'
     reverse?: boolean
     link?: boolean
   }>(),
   {
-    team: () => ({ name: 'TBD', image: undefined, region: undefined, _id: '-1' }) as RLTeam,
+    team: () => ({ name: 'TBD', image_url: undefined, id: -1 }) as unknown as PSTeam,
     reverse: false,
     link: false
   }
 )
 
-const image = computed(() => props.team.image || getRegion(props.team.region).flag)
+const image = computed(() => props.team.image_url)
 </script>

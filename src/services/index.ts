@@ -1,8 +1,9 @@
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import UserService from './users'
-import RLService from './rl'
+// import RLService from './rl.ts.old'
 import ForecastsService from './forecasts'
-import ProxyClient from './proxy'
+// import ProxyClient from './proxy'
+import PandaScoreService from './ps'
 
 const initServices = () => {
   const client = axios.create({
@@ -35,12 +36,13 @@ const initServices = () => {
   // baseURL: 'https://zsr.octane.gg'
   // baseURL: 'https://api.slokh.gg'
 
-  const rlClient = new ProxyClient(client, 'https://api.slokh.gg')
+  // const rlClient = new ProxyClient(client, 'https://api.slokh.gg')
 
   return {
     users: new UserService(client),
     forecasts: new ForecastsService(client),
-    rl: new RLService(rlClient as unknown as AxiosInstance)
+    ps: new PandaScoreService(client)
+    // rl: new RLService(rlClient as unknown as AxiosInstance)
   }
 }
 

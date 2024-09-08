@@ -39,36 +39,6 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <!-- DESKTOP -->
-        <div class="hidden md:flex">
-          <Select
-            v-model="RLStore.currentEvent"
-            :options="events"
-            optionLabel="name"
-            optionValue="slug"
-            placeholder="Select an event"
-            class="w-full md:w-48 lg:w-56"
-          >
-          </Select>
-        </div>
-
-        <!-- MOBILE -->
-        <div class="md:hidden">
-          <Button @click="visible = true" icon="pi pi-calendar" size="small"></Button>
-
-          <Dialog v-model:visible="visible" modal header="Choose event" :style="{ width: '25rem' }">
-            <Select
-              v-model="RLStore.currentEvent"
-              :options="events"
-              optionLabel="name"
-              optionValue="slug"
-              placeholder="Select an event"
-              class="w-full"
-            >
-            </Select>
-          </Dialog>
-        </div>
-
         <Tag icon="pi pi-trophy" severity="success" :value="points"></Tag>
 
         <UserMenu />
@@ -83,15 +53,8 @@ const RLStore = useRLStore()
 const route = useRoute()
 const router = useRouter()
 
-const visible = ref(false)
-
 const items = ref([
   { route: '/forecasts', label: 'Forecasts', icon: 'pi pi-chart-line' },
-  // {
-  //   route: `/current-event`,
-  //   label: 'Curent event',
-  //   icon: 'pi pi-calendar'
-  // },
   { route: '/results', label: 'Results', icon: 'pi pi-trophy' },
   { route: '/leaderboard', label: 'Leaderboard', icon: 'pi pi-list' }
 ])
@@ -100,7 +63,7 @@ const mounted = ref(false)
 const points = ref(0)
 
 onMounted(async () => {
-  points.value = await store.getForecastPoints(RLStore.currentEvent)
+  points.value = await store.getForecastPoints(RLStore.focusSerieId)
 
   // fix initial focus route animation
   setTimeout(() => {
@@ -118,19 +81,6 @@ const handleClick = (route: string) => {
   if (route === focusRoute.value) return
   router.push(route)
 }
-
-const events = ref([
-  { name: 'RLCS 2024 World Championship', slug: '8b0a-rlcs-2024-world-championship' },
-  { name: 'RLCS 2024 Split 2 Major', slug: 'e7ad-rlcs-2024-split-2-major' },
-  { name: 'RLCS 2024 Split 1 Major', slug: 'e7ac-rlcs-2024-split-1-major' }
-])
-
-watch(
-  () => RLStore.currentEvent,
-  async () => {
-    window.location.reload()
-  }
-)
 </script>
 
 <style>

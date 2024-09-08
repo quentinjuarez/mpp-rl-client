@@ -3,126 +3,56 @@ import { defineStore } from 'pinia'
 export const useRLStore = defineStore('mpp-rl-data', {
   state: () => ({
     loading: false,
-    currentEvent: '8b0a-rlcs-2024-world-championship',
-    events: [] as RLEvent[],
-    event: null as RLEnrichedEvent | null,
-    matches: [] as RLMatch[],
-    match: null as RLEnrichedMatch | null,
-    team: null as RLEnrichedTeam | null
+    focusSerieId: 7907,
+    // cache infos
+    serie: null as PSSerie | null,
+    teams: null as PSTeam[] | null
   }),
   getters: {},
   actions: {
-    async getEvents() {
+    async getSerie() {
       try {
         this.loading = true
-        const { data } = await this.$services.rl.events()
+        const res = await this.$services.ps.serie(this.focusSerieId)
 
-        this.events = data
+        this.serie = res
 
         return true
       } catch (error) {
-        this.events = []
+        this.serie = null
         return false
       } finally {
         this.loading = false
       }
     },
-    async getEvent(id: string) {
+    async getUpcomingMatches() {
       try {
-        this.event = null
-        this.loading = true
-        const res = await this.$services.rl.event(id)
-        const { data: resMatches } = await this.$services.rl.eventMatches(id)
+        const res = await this.$services.ps.upcomingMatches(this.focusSerieId)
 
-        this.event = {
-          ...res,
-          matches: resMatches,
-          participants: []
-        }
-
-        return true
+        return res.matches
       } catch (error) {
-        this.event = null
-        this.matches = []
-        return false
-      } finally {
-        this.loading = false
+        return null
       }
     },
-    async getMatches(dev?: boolean) {
+    async getPastMatches() {
       try {
-        this.loading = true
-        const { data } = await this.$services.rl.matches(this.currentEvent, dev)
+        const res = await this.$services.ps.pastMatches(this.focusSerieId)
 
-        this.matches = data
-
-        return true
+        return res.matches
       } catch (error) {
-        this.matches = []
-        return false
-      } finally {
-        this.loading = false
+        return null
       }
     },
-    async getResults() {
+    async getTeams() {
       try {
         this.loading = true
-        const { data } = await this.$services.rl.results(this.currentEvent)
+        const res = await this.$services.ps.teams()
 
-        const realMatches = data.filter((m) => m.blue)
-
-        this.matches = realMatches
+        this.teams = res.teams
 
         return true
       } catch (error) {
-        this.matches = []
-        return false
-      } finally {
-        this.loading = false
-      }
-    },
-    async getMatch(slug: string) {
-      try {
-        this.loading = true
-        this.match = null
-        const res = await this.$services.rl.match(slug)
-
-        this.match = res
-
-        return true
-      } catch (error) {
-        this.match = null
-        return false
-      } finally {
-        this.loading = false
-      }
-    },
-    async getTeam(slug: string) {
-      try {
-        this.loading = true
-        const res = await this.$services.rl.team(slug)
-        const { data: resPlayers } = await this.$services.rl.teamPlayers(slug)
-
-        this.team = {
-          ...res,
-          players: resPlayers
-        }
-
-        return true
-      } catch (error) {
-        this.team = null
-        return false
-      } finally {
-        this.loading = false
-      }
-    },
-    async search() {
-      try {
-        this.loading = true
-        await this.$services.rl.search()
-
-        return true
-      } catch (error) {
+        this.teams = []
         return false
       } finally {
         this.loading = false

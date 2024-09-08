@@ -1,13 +1,8 @@
 import isAuth from '@/middlewares/isAuth'
 import getMe from '@/middlewares/getMe'
-import getEvent from '@/middlewares/getEvent'
-import getEvents from '@/middlewares/getEvents'
-import getMatch from '@/middlewares/getMatch'
-import getMatches from '@/middlewares/getMatches'
 import getLeaderboard from '@/middlewares/getLeaderboard'
 import getForecasts from '@/middlewares/getForecasts'
 import getUser from '@/middlewares/getUser'
-import getTeam from '@/middlewares/getTeam'
 import getResults from '@/middlewares/getResults'
 
 const routes = [
@@ -46,7 +41,7 @@ const routes = [
         name: 'forecasts',
         component: () => import('@/pages/forecasts.vue'),
         meta: {
-          middlewares: [isAuth, getMe(false), getForecasts, getMatches]
+          middlewares: [isAuth, getMe(false), getForecasts]
         }
       },
       {
@@ -58,51 +53,11 @@ const routes = [
         }
       },
       {
-        path: 'events',
-        name: 'events',
-        component: () => import('@/pages/events.vue'),
-        meta: {
-          middlewares: [isAuth, getMe(false), getEvents]
-        }
-      },
-      {
-        path: 'events/:slug',
-        name: 'event',
-        component: () => import('@/pages/event.vue'),
-        meta: {
-          middlewares: [isAuth, getMe(false), getEvent(false)]
-        }
-      },
-      {
-        path: 'current-event',
-        name: 'current-event',
-        component: () => import('@/pages/event.vue'),
-        meta: {
-          middlewares: [isAuth, getMe(false), getEvent(true)]
-        }
-      },
-      {
         path: 'results',
         name: 'results',
         component: () => import('@/pages/results.vue'),
         meta: {
           middlewares: [isAuth, getMe(false), getResults]
-        }
-      },
-      {
-        path: 'matches/:slug',
-        name: 'match',
-        component: () => import('@/pages/match.vue'),
-        meta: {
-          middlewares: [isAuth, getMe(false), getMatch]
-        }
-      },
-      {
-        path: 'teams/:slug',
-        name: 'team',
-        component: () => import('@/pages/team.vue'),
-        meta: {
-          middlewares: [isAuth, getMe(false), getTeam]
         }
       }
     ]
