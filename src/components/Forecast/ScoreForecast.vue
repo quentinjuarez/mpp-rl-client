@@ -26,7 +26,7 @@
           mask="9"
           placeholder="_"
           :invalid="blueError"
-          :disabled="winner === 'blue'"
+          :disabled="winner === 'blue' || props.readonly"
           :pt="{ input: { inputmode: 'numeric' } }"
           @keydown="handleUpdate"
         />
@@ -48,7 +48,7 @@
           mask="9"
           placeholder="_"
           :invalid="orangeError"
-          :disabled="winner === 'orange'"
+          :disabled="winner === 'orange' || props.readonly"
           :pt="{ input: { inputmode: 'numeric' } }"
           @keydown="handleUpdate"
         />
