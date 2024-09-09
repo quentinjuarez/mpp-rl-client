@@ -22,5 +22,6 @@ declare global {
     processed: boolean
     correct: boolean
     exact: boolean
+    match?: PSMatch
   }
 }

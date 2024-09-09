@@ -9,8 +9,7 @@ export const useStore = defineStore('mpp-rl-store', {
     token: null as string | null,
     loading: false,
     leaderboard: [] as any[],
-    forecasts: [] as Forecast[],
-    results: {} as Record<string, Forecast>
+    forecasts: [] as Forecast[]
   }),
   getters: {
     isAuthenticated: (state) => !!state.token
@@ -207,6 +206,7 @@ export const useStore = defineStore('mpp-rl-store', {
         const user = await this.$services.users.get(username)
 
         this.user = user
+        this.forecasts = user.forecasts
       } catch (error) {
         this.user = null
       } finally {

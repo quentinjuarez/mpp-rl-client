@@ -87,7 +87,7 @@ class UsersService {
   }
 
   async get(username: string) {
-    const res = await this.client.get<User>(`/users/${username}`)
+    const res = await this.client.get<User & { forecasts: Forecast[] }>(`/users/${username}`)
 
     return res.data
   }
