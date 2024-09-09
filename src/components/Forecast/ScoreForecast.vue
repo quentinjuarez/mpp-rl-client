@@ -19,6 +19,7 @@
           placeholder="_"
           :invalid="blueError"
           :disabled="winner === 'blue'"
+          inputmode="numeric"
           @keydown="handleUpdate"
         />
       </div>
@@ -40,6 +41,7 @@
           placeholder="_"
           :invalid="orangeError"
           :disabled="winner === 'orange'"
+          inputmode="numeric"
           @keydown="handleUpdate"
         />
       </div>
