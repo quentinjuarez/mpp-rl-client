@@ -74,6 +74,11 @@ export const useStore = defineStore('mpp-rl-store', {
       this.user = null
       this.token = null
 
+      const RLStore = useRLStore()
+
+      RLStore.$reset()
+      this.$reset()
+
       this.$router.push('/')
     },
     async getMe() {

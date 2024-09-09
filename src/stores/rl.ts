@@ -5,7 +5,20 @@ export const useRLStore = defineStore('mpp-rl-data', {
     loading: false,
     focusSerieId: 7907,
     // cache infos
-    serie: null as PSSerie | null,
+    serie: {
+      begin_at: '2024-09-10T16:00:00Z',
+      end_at: '2024-09-16T01:00:00Z',
+      full_name: '2024',
+      id: 7907,
+      league_id: 4834,
+      modified_at: '2024-08-30T08:26:14Z',
+      name: '',
+      season: null,
+      slug: 'rl-rlcs-world-championship-2024',
+      winner_id: null,
+      winner_type: 'Team',
+      year: 2024
+    } as PSSerie | null,
     teams: null as PSTeam[] | null
   }),
   getters: {},

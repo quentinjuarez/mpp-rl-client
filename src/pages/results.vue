@@ -39,6 +39,8 @@
 const RLStore = useRLStore()
 const store = useStore()
 
+const { serie } = storeToRefs(RLStore)
+
 const matches = ref<PSMatch[]>([])
 const loading = ref(false)
 
@@ -68,16 +70,19 @@ const focusMatches = computed(() => {
   return array
 })
 
-const focusDay = ref<Date>(new Date())
+const focusDay = ref<Date>(serie.value ? new Date(serie.value.begin_at) : new Date())
 
 const days = computed(() => {
   const now = new Date()
+  if (!serie.value) return [now]
+
+  const start = new Date(serie.value.begin_at)
+  const end = new Date(serie.value.end_at)
+
   const daysArray = []
 
-  for (let i = 0; i < 30; i++) {
-    const day = new Date(now)
-    day.setDate(now.getDate() + i)
-    daysArray.push(day)
+  for (let i = start; i <= end; i.setDate(i.getDate() + 1)) {
+    daysArray.push(new Date(i))
   }
 
   return daysArray
