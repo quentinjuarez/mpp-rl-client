@@ -27,7 +27,7 @@
       </div>
 
       <div v-if="focusMatches.length" class="space-y-2">
-        <ForecastItem v-for="match in focusMatches" :key="match.id" :match="match" />
+        <ForecastItem v-for="match in focusMatches" :key="match.id" :match="match" readonly />
       </div>
 
       <div v-else class="text-center text-neutral-400">No results found</div>

@@ -12,7 +12,7 @@
         <span>Forecasts</span>
       </label>
       <div class="flex flex-col items-center gap-2">
-        <ForecastItem v-for="match in matches" :key="match.id" :match="match" />
+        <ForecastItem v-for="match in matches" :key="match.id" :match="match" readonly />
       </div>
       <div v-if="!matches.length" class="text-center text-neutral-400">No forecasts found</div>
     </div>

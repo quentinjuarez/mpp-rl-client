@@ -1,13 +1,13 @@
 <template>
   <component
-    :is="props.link ? 'RouterLink' : 'button'"
+    :is="props.readonly ? 'div' : 'button'"
     :to="{ name: 'team', params: { slug: props.team.slug } }"
     class="flex flex-col items-center gap-2"
   >
     <div
       class="overflow-hidden rounded-full transition-all"
       :class="{
-        'hover:scale-105': props.team.acronym !== 'TBD',
+        'hover:scale-105': props.team.acronym !== 'TBD' && props.readonly !== true,
         'scale-105': props.color === props.winner,
         'scale-95 opacity-20': props.color !== props.winner && props.winner !== undefined
       }"
@@ -24,7 +24,7 @@ const props = withDefaults(
     team?: PSTeam
     color?: 'blue' | 'orange'
     winner?: 'blue' | 'orange'
-    link?: boolean
+    readonly?: boolean
   }>(),
   {
     team: () =>
@@ -32,8 +32,7 @@ const props = withDefaults(
         acronym: 'TBD',
         image_url: 'https://img.icons8.com/?size=100&id=hQSBVk8KAnp1&format=png&color=000000',
         id: -1
-      }) as unknown as PSTeam,
-    link: false
+      }) as unknown as PSTeam
   }
 )
 </script>

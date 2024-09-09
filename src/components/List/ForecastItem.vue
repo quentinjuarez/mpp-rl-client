@@ -1,7 +1,13 @@
 <template>
   <div class="w-fit rounded-lg p-1 transition-all duration-500 hover:bg-white/5" :class="bgStyles">
     <div class="flex items-center gap-4 rounded-md bg-black/75 p-4 md:gap-8">
-      <TeamLogo :team="blueTeam" @click.stop="onClick('blue')" color="blue" :winner="winner" />
+      <TeamLogo
+        :team="blueTeam"
+        @click.stop="onClick('blue')"
+        color="blue"
+        :winner="winner"
+        :readonly="readonly"
+      />
       <ScoreForecast
         :match="props.match"
         :winner="winner"
@@ -10,6 +16,7 @@
         :forecast="forecast"
         :maxScore="maxScore"
         :notPlanned="notPlanned"
+        :readonly="readonly"
         @update="debouncedUpdateForecast"
         @display="display = true"
       />
@@ -19,9 +26,15 @@
         @click.stop="onClick('orange')"
         color="orange"
         :winner="winner"
+        :readonly="readonly"
       />
     </div>
-    <ForecastDialog v-if="display" :match="props.match" @close="display = false" />
+    <ForecastDialog
+      v-if="display"
+      :match="props.match"
+      @close="display = false"
+      :readonly="readonly"
+    />
   </div>
 </template>
 
@@ -30,6 +43,7 @@ import debounce from 'lodash.debounce'
 
 const props = defineProps<{
   match: PSMatch
+  readonly?: boolean
 }>()
 
 const display = ref(false)
@@ -61,7 +75,7 @@ onMounted(() => {
 })
 
 function onClick(side: 'blue' | 'orange') {
-  if (side === winner.value || notPlanned.value) return
+  if (side === winner.value || notPlanned.value || props.readonly) return
 
   winner.value = side
 
@@ -99,6 +113,8 @@ const clampScore = (val: string, color: 'blue' | 'orange') => {
 }
 
 const updateForecast = async (payload: { blue: string; orange: string }) => {
+  if (props.readonly) return
+
   blue.value = clampScore(payload.blue, 'blue')
   orange.value = clampScore(payload.orange, 'orange')
 

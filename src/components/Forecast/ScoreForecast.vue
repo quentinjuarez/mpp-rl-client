@@ -58,7 +58,7 @@
       v-else
       class="w-[153px] text-center"
       :class="{
-        'opacity-0': props.notPlanned
+        'opacity-0': props.notPlanned || props.readonly
       }"
     >
       Choose a winner
@@ -79,6 +79,7 @@ const props = defineProps<{
   orange?: number
   maxScore: number
   notPlanned?: boolean
+  readonly?: boolean
 }>()
 
 const blueText = ref<string>(props.blue !== undefined ? String(props.blue) : '')
