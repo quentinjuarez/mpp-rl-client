@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-2" :id="props.match.slug">
+  <div class="space-y-2" :id="String(props.match.id)">
     <div class="text-center text-neutral-400">
       {{ time }}
     </div>
@@ -19,7 +19,7 @@
           placeholder="_"
           :invalid="blueError"
           :disabled="winner === 'blue'"
-          inputmode="numeric"
+          :pt="{ input: { inputmode: 'numeric' } }"
           @keydown="handleUpdate"
         />
       </div>
@@ -41,7 +41,7 @@
           placeholder="_"
           :invalid="orangeError"
           :disabled="winner === 'orange'"
-          inputmode="numeric"
+          :pt="{ input: { inputmode: 'numeric' } }"
           @keydown="handleUpdate"
         />
       </div>
