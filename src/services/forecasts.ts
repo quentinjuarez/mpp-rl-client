@@ -55,6 +55,12 @@ class ForecastsService {
 
     return res.data
   }
+
+  async getByMatchId(matchId: number) {
+    const res = await this.client.get<{ forecasts: Forecast[] }>(`/forecasts/${matchId}`)
+
+    return res.data
+  }
 }
 
 export default ForecastsService

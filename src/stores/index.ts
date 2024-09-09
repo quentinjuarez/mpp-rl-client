@@ -212,6 +212,15 @@ export const useStore = defineStore('mpp-rl-store', {
       } finally {
         this.loading = false
       }
+    },
+    async getForecastsByMatchId(matchId: number) {
+      try {
+        const res = await this.$services.forecasts.getByMatchId(matchId)
+
+        return res.forecasts
+      } catch (error) {
+        return []
+      }
     }
   },
   persist: {

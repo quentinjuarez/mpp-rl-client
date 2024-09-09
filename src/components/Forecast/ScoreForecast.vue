@@ -1,7 +1,15 @@
 <template>
   <div class="space-y-2" :id="String(props.match.id)">
-    <div class="text-center text-neutral-400">
-      {{ time }}
+    <div class="flex items-center justify-center gap-1 text-center text-neutral-400">
+      <p>
+        {{ time }}
+      </p>
+      <button
+        class="flex size-5 items-center justify-center rounded-full bg-neutral-700"
+        @click="emit('display')"
+      >
+        <Icon name="info" class="!text-sm text-neutral-400" />
+      </button>
     </div>
     <div class="flex w-[153px] flex-none items-center justify-center gap-4" v-if="winner">
       <div
@@ -94,6 +102,7 @@ const error = computed(() => {
 
 const emit = defineEmits<{
   (event: 'update', value: { blue: string; orange: string }): void
+  (event: 'display'): void
 }>()
 
 const handleUpdate = () => {

@@ -1,7 +1,7 @@
 <template>
   <div class="w-fit rounded-lg p-1 transition-all duration-500 hover:bg-white/5" :class="bgStyles">
     <div class="flex items-center gap-4 rounded-md bg-black/75 p-4 md:gap-8">
-      <TeamLogo :team="blueTeam" @click="onClick('blue')" color="blue" :winner="winner" />
+      <TeamLogo :team="blueTeam" @click.stop="onClick('blue')" color="blue" :winner="winner" />
       <ScoreForecast
         :match="props.match"
         :winner="winner"
@@ -11,15 +11,17 @@
         :maxScore="maxScore"
         :notPlanned="notPlanned"
         @update="debouncedUpdateForecast"
+        @display="display = true"
       />
       <TeamLogo
         :team="orangeTeam"
         reverse
-        @click="onClick('orange')"
+        @click.stop="onClick('orange')"
         color="orange"
         :winner="winner"
       />
     </div>
+    <ForecastDialog v-if="display" :match="props.match" @close="display = false" />
   </div>
 </template>
 
@@ -29,6 +31,8 @@ import debounce from 'lodash.debounce'
 const props = defineProps<{
   match: PSMatch
 }>()
+
+const display = ref(false)
 
 const store = useStore()
 
