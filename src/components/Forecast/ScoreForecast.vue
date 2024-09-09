@@ -46,7 +46,15 @@
         />
       </div>
     </div>
-    <div v-else class="w-[153px] text-center">Choose a winner</div>
+    <div
+      v-else
+      class="w-[153px] text-center"
+      :class="{
+        'opacity-0': props.notPlanned
+      }"
+    >
+      Choose a winner
+    </div>
 
     <div class="text-center text-neutral-400">Best of {{ props.match.number_of_games }}</div>
     <!-- <div>Text {{ blueText }} - {{ orangeText }}</div>
@@ -62,6 +70,7 @@ const props = defineProps<{
   blue?: number
   orange?: number
   maxScore: number
+  notPlanned?: boolean
 }>()
 
 const blueText = ref<string>(props.blue !== undefined ? String(props.blue) : '')

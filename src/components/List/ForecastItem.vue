@@ -9,6 +9,7 @@
         :orange="orange"
         :forecast="forecast"
         :maxScore="maxScore"
+        :notPlanned="notPlanned"
         @update="debouncedUpdateForecast"
       />
       <TeamLogo
@@ -56,7 +57,7 @@ onMounted(() => {
 })
 
 function onClick(side: 'blue' | 'orange') {
-  if (side === winner.value) return
+  if (side === winner.value || notPlanned.value) return
 
   winner.value = side
 
@@ -119,6 +120,10 @@ const blueTeam = computed(() => {
 
 const orangeTeam = computed(() => {
   return props.match.opponents?.[1]?.opponent
+})
+
+const notPlanned = computed(() => {
+  return !blueTeam.value || !orangeTeam.value
 })
 </script>
 
