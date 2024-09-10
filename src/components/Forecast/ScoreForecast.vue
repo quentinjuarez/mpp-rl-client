@@ -133,7 +133,7 @@ const time = computed(() => {
 
 const focusInput = (targetId: string) => {
   setTimeout(() => {
-    const test = document.getElementById(props.match.slug)
+    const test = document.getElementById(String(props.match.id))
     const input = test?.querySelector(`#${targetId}`)
     input?.querySelector('input')?.focus()
   }, 50)
