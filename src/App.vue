@@ -1,6 +1,8 @@
 <template>
   <div class="dark min-h-screen bg-neutral-900 font-custom selection:bg-blue selection:text-white">
     <RouterView />
+
+    <Toast />
   </div>
 </template>
 

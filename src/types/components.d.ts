@@ -30,6 +30,7 @@ declare module 'vue' {
     Tabs: typeof import('primevue/tabs')['default']
     Tag: typeof import('primevue/tag')['default']
     TeamLogo: typeof import('./../components/Team/TeamLogo.vue')['default']
+    Toast: typeof import('primevue/toast')['default']
     UserMenu: typeof import('./../components/Layout/UserMenu.vue')['default']
   }
   export interface ComponentCustomProperties {

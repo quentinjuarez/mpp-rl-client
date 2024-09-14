@@ -11,6 +11,8 @@ import { definePreset } from '@primevue/themes'
 import 'primeicons/primeicons.css'
 import Vue3RouterMiddlewares from 'vue3-router-middlewares'
 
+import ToastService from 'primevue/toastservice'
+
 const app = createApp(App)
 
 const router = initRouter()
@@ -53,6 +55,8 @@ app.use(PrimeVue, {
   },
   ripple: false
 })
+
+app.use(ToastService)
 
 app.directive('ripple', {})
 

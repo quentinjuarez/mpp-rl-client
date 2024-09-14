@@ -7,7 +7,7 @@
     :breakpoints="{ '1024px': '75vw', '768px': '90vw' }"
   >
     <div class="mb-4 flex items-center gap-4">
-      <DataTable :value="forecasts" stripedRows>
+      <DataTable v-if="forecasts.length" :value="forecasts" stripedRows>
         <Column
           v-for="col of columns"
           :key="col.field"
@@ -15,6 +15,7 @@
           :header="col.header"
         ></Column>
       </DataTable>
+      <p v-else>No forecasts found</p>
     </div>
   </Dialog>
 </template>

@@ -54,6 +54,8 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'primevue/usetoast'
+
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
@@ -89,6 +91,8 @@ const onLogin = async () => {
 
   if (res) {
     router.push((route.query.redirect as string) || '/')
+  } else {
+    show()
   }
 }
 
@@ -100,6 +104,12 @@ const registerUrl = computed(() => {
 const googleUrl = computed(() => {
   return `${import.meta.env.VITE_APP_BACK_URL}/api/auth/google`
 })
+
+const toast = useToast()
+
+const show = () => {
+  toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials', life: 3000 })
+}
 </script>
 
 <style>

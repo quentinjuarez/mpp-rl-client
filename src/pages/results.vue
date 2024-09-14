@@ -47,13 +47,30 @@ const loading = ref(false)
 const route = useRoute()
 
 onMounted(async () => {
-  if (route.query.d) {
-    focusDay.value = new Date(route.query.d as string)
+  const { d } = route.query
+  const serieBeginAt = serie.value?.begin_at
+  const serieEndAt = serie.value?.end_at
+  const today = new Date()
+
+  // Set focusDay based on query or serie dates
+  if (d) {
+    focusDay.value = new Date(d as string)
+  } else {
+    const defaultDay =
+      serieBeginAt && today < new Date(serieBeginAt) ? new Date(serieBeginAt) : today
+
+    focusDay.value = new Date(defaultDay.setDate(defaultDay.getDate() - 1))
+
+    if (serieEndAt && today > new Date(serieEndAt)) {
+      focusDay.value = new Date(serieEndAt)
+    }
   }
 
+  // Fetch past matches
   loading.value = true
   const res = await RLStore.getPastMatches()
   loading.value = false
+
   if (res) {
     matches.value = res
   }
@@ -70,7 +87,7 @@ const focusMatches = computed(() => {
   return array
 })
 
-const focusDay = ref<Date>(serie.value ? new Date(serie.value.begin_at) : new Date())
+const focusDay = ref<Date>(new Date())
 
 const days = computed(() => {
   const now = new Date()
